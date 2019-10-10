@@ -20,6 +20,18 @@
   <table border="1">
     <tbody>
       <tr>
+        <td>辺aの長さ</td>
+        <td id="length_a"></td>
+      </tr>
+      <tr>
+        <td>辺bの長さ</td>
+        <td id="length_b"></td>
+      </tr>
+      <tr>
+        <td>辺cの長さ</td>
+        <td id="length_c"></td>
+      </tr>
+      <tr>
         <td>3辺の合計長さ</td>
         <td id="sum_sides"></td>
       </tr>
@@ -44,19 +56,36 @@
      **/
     constructor(vertexes) {
       this.vertexes = {
-        a: {
-          x: vertexes[0][0],
-          y: vertexes[0][1]
+        A: {
+          x1: vertexes[0][0],
+          y1: vertexes[0][1]
         },
-        b: {
-          x: vertexes[1][0],
-          y: vertexes[1][1]
+        B: {
+          x2: vertexes[1][0],
+          y2: vertexes[1][1]
         },
-        c: {
-          x: vertexes[2][0],
-          y: vertexes[2][1]
+        C: {
+          x3: vertexes[2][0],
+          y3: vertexes[2][1]
         }
-      }
+      };
+      this.length = {};
+    }
+
+    // ３辺の長さを計算する
+    calcLength() {
+      this.length.a = Math.sqrt(
+        Math.pow((this.vertexes.B.x2 - this.vertexes.C.x3), 2) +
+        Math.pow((this.vertexes.B.y2 - this.vertexes.C.y3), 2)
+      );
+      this.length.b = Math.sqrt(
+        Math.pow((this.vertexes.C.x3 - this.vertexes.A.x1), 2) +
+        Math.pow((this.vertexes.C.y3 - this.vertexes.A.y1), 2)
+      );
+      this.length.c = Math.sqrt(
+        Math.pow((this.vertexes.A.x1 - this.vertexes.B.x2), 2) +
+        Math.pow((this.vertexes.A.y1 - this.vertexes.B.y2), 2)
+      );
     }
 
     // 三つの頂点を直線で繋いだ三角形をcanvasに描画する
@@ -65,9 +94,9 @@
         var ctx = canvas.getContext("2d");
 
         ctx.beginPath();
-        ctx.moveTo(this.vertexes.a.x, this.vertexes.a.y); //最初の点の場所
-        ctx.lineTo(this.vertexes.b.x, this.vertexes.b.y); //2番目の点の場所
-        ctx.lineTo(this.vertexes.c.x, this.vertexes.c.y); //3番目の点の場所
+        ctx.moveTo(this.vertexes.A.x1, this.vertexes.A.y1); //最初の点の場所
+        ctx.lineTo(this.vertexes.B.x2, this.vertexes.B.y2); //2番目の点の場所
+        ctx.lineTo(this.vertexes.C.x3, this.vertexes.C.y3); //3番目の点の場所
         ctx.closePath();	//三角形の最後の線 closeさせる
 
         ctx.strokeStyle = "rgb(0,0,0)"; //枠線の色
@@ -78,18 +107,11 @@
       }
     }
 
-    // 三辺の長さの合計を返す
+    // ３辺の長さの合計を返す
+    // 下記URLの図を参照
+    // https://math-jp.net/2018/08/26/yogenteiri-kakudo/
     calcSumSides() {
-      let abx = this.vertexes.a.x - this.vertexes.b.x;
-      let aby = this.vertexes.a.y - this.vertexes.b.y;
-      let bcx = this.vertexes.b.x - this.vertexes.c.x;
-      let bcy = this.vertexes.b.y - this.vertexes.c.y;
-      let cax = this.vertexes.c.x - this.vertexes.a.x;
-      let cay = this.vertexes.c.y - this.vertexes.a.y;
-
-      return Math.sqrt(Math.pow(abx, 2) + Math.pow(aby, 2)) +
-        Math.sqrt(Math.pow(bcx, 2) + Math.pow(bcy, 2)) +
-        Math.sqrt(Math.pow(cax, 2) + Math.pow(cay, 2));
+      return this.length.a + this.length.b + this.length.c;
     }
 
     // 面積を返す
@@ -97,12 +119,12 @@
     // https://mathwords.net/x1y2hikux2y1
     // |(x1 - x3)(y2 - y3) - (x2 - x3)(y1 - y3)|/2
     calcArea() {
-      let x1 = this.vertexes.a.x;
-      let x2 = this.vertexes.b.x;
-      let x3 = this.vertexes.c.x;
-      let y1 = this.vertexes.a.y;
-      let y2 = this.vertexes.b.y;
-      let y3 = this.vertexes.c.y;
+      let x1 = this.vertexes.A.x1;
+      let x2 = this.vertexes.B.x2;
+      let x3 = this.vertexes.C.x3;
+      let y1 = this.vertexes.A.y1;
+      let y2 = this.vertexes.B.y2;
+      let y3 = this.vertexes.C.y3;
 
       return Math.abs((x1 - x3) * (y2 - y3) - (x2 - x3) * (y1 - y3)) / 2
     }
@@ -126,21 +148,26 @@
     }
 
     // テスト用
-    let test = [
-      [100, 100],
-      [100, 200],
-      [200, 200]
-    ]
-    return new Triangle(test);
+    // let test = [
+    //   [100, 100],
+    //   [100, 200],
+    //   [200, 200]
+    // ]
+    // return new Triangle(test);
 
-    // return new Triangle(vertexes);
+    return new Triangle(vertexes);
   }
 
   // 三角形のインスタンスを生成する
   let triangle = makeTriangle();
+  triangle.calcLength();
   // canvasに三角形を描画する
   triangle.drawTriangle();
-  // 3辺の合計長さを出力する
+
+  // 計算結果を出力する
+  $('#length_a').text(triangle.length.a);
+  $('#length_b').text(triangle.length.b);
+  $('#length_c').text(triangle.length.c);
   $('#sum_sides').text(triangle.calcSumSides());
   $('#area').text(triangle.calcArea());
 
