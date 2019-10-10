@@ -26,12 +26,24 @@
 
   class Triangle {
     /**
-     * @param {array} vertex1
-     * @param {array} vertex2
-     * @param {array} vertex3
+     * a,b,cという三つの頂点をもつ三角形
+     * @param {object} vertexes
      **/
-    constructor(vertex1, vertex2, vertex3) {
-      this.vertexes = [vertex1, vertex2, vertex3];
+    constructor(vertexes) {
+      this.vertexes = {
+        a: {
+          x: vertexes[0][0],
+          y: vertexes[0][1]
+        },
+        b: {
+          x: vertexes[1][0],
+          y: vertexes[1][1]
+        },
+        c: {
+          x: vertexes[2][0],
+          y: vertexes[2][1]
+        }
+      }
     }
 
     // 三つの頂点を直線で繋いだ三角形をcanvasに描画する
@@ -40,9 +52,9 @@
         var ctx = canvas.getContext("2d");
 
         ctx.beginPath();
-        ctx.moveTo(this.vertexes[0][0], this.vertexes[0][1]); //最初の点の場所
-        ctx.lineTo(this.vertexes[1][0], this.vertexes[1][1]); //2番目の点の場所
-        ctx.lineTo(this.vertexes[2][0], this.vertexes[2][1]); //3番目の点の場所
+        ctx.moveTo(this.vertexes.a.x, this.vertexes.a.y); //最初の点の場所
+        ctx.lineTo(this.vertexes.b.x, this.vertexes.b.y); //2番目の点の場所
+        ctx.lineTo(this.vertexes.c.x, this.vertexes.c.y); //3番目の点の場所
         ctx.closePath();	//三角形の最後の線 closeさせる
 
         ctx.strokeStyle = "rgb(0,0,0)"; //枠線の色
@@ -53,7 +65,10 @@
       }
     }
 
-    // 三角形の頂点を返す静的メソッド
+    /**
+     * 三角形の頂点を返す静的メソッド
+     * @return {array} vertex [x,y]
+     **/
     static makeVertex() {
       let vertex = [];
       vertex.push(Math.random() * WIDTH);
@@ -67,7 +82,7 @@
     for (let i = 0; i < 3; i++) {
       vertexes.push(Triangle.makeVertex())
     }
-    return new Triangle(vertexes[0], vertexes[1], vertexes[2]);
+    return new Triangle(vertexes);
   }
   let triangle = makeTriangle();
 
