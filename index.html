@@ -10,10 +10,7 @@
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <style>
     .canvas_wrapper {
-      width: 1000px;
-    }
-
-    .canvas {
+      width: 1200px;
       border: 1px solid;
     }
 
@@ -35,7 +32,7 @@
       <canvas id="canvas1" class="canvas"></canvas>
     </div>
     <div class="center">
-      <button>生成</button>
+      <button id="generate">生成</button>
     </div>
     <table border="1" class="table center">
       <tbody>
@@ -173,7 +170,7 @@
     }
   }
 
-  let makeTriangle = () => {
+  let generateTriangle = () => {
     let vertexes = [];
     for (let i = 0; i < 3; i++) {
       vertexes.push(Triangle.makeVertex())
@@ -190,19 +187,34 @@
     return new Triangle(vertexes);
   }
 
-  // 三角形のインスタンスを生成する
-  let triangle = makeTriangle();
-  triangle.calcLength();
-  // canvasに三角形を描画する
-  triangle.drawTriangle();
+  // キャンバスを白に塗りつぶす
+  let resetCanvas = () => {
+    if (canvas.getContext) {
+      var ctx = canvas.getContext("2d");
+      ctx.fillStyle = "rgba(255, 255, 255)";
+      ctx.fillRect(0, 0, WIDTH, HEIGHT);
+    }
+  }
 
-  // 計算結果を出力する
-  $('#length_a').text(triangle.length.a);
-  $('#length_b').text(triangle.length.b);
-  $('#length_c').text(triangle.length.c);
-  $('#sum_sides').text(triangle.calcSumSides());
-  $('#area').text(triangle.calcArea());
+  let start = () => {
+    // 三角形のインスタンスを生成する
+    let triangle = generateTriangle();
+    triangle.calcLength();
+    // canvasに三角形を描画する
+    triangle.drawTriangle();
+    // 計算結果を出力する
+    $('#length_a').text(triangle.length.a);
+    $('#length_b').text(triangle.length.b);
+    $('#length_c').text(triangle.length.c);
+    $('#sum_sides').text(triangle.calcSumSides());
+    $('#area').text(triangle.calcArea());
+  }
 
+  $('#generate').click(() => {
+    resetCanvas();
+    start();
+  }
+  );
 </script>
 
 </html>
