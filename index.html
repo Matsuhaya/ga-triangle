@@ -23,6 +23,10 @@
         <td>3辺の合計長さ</td>
         <td id="sum_sides"></td>
       </tr>
+      <tr>
+        <td>面積</td>
+        <td id="area"></td>
+      </tr>
     </tbody>
 </body>
 
@@ -82,10 +86,25 @@
       let bcy = this.vertexes.b.y - this.vertexes.c.y;
       let cax = this.vertexes.c.x - this.vertexes.a.x;
       let cay = this.vertexes.c.y - this.vertexes.a.y;
-      let total = Math.sqrt(Math.pow(abx, 2) + Math.pow(aby, 2));
-      total += Math.sqrt(Math.pow(bcx, 2) + Math.pow(bcy, 2));
-      total += Math.sqrt(Math.pow(cax, 2) + Math.pow(cay, 2));
-      return total;
+
+      return Math.sqrt(Math.pow(abx, 2) + Math.pow(aby, 2)) +
+        Math.sqrt(Math.pow(bcx, 2) + Math.pow(bcy, 2)) +
+        Math.sqrt(Math.pow(cax, 2) + Math.pow(cay, 2));
+    }
+
+    // 面積を返す
+    // (x1,y1),(x2,y2),(x3,y3)の３つを頂点とする三角形の公式は下記の通り
+    // https://mathwords.net/x1y2hikux2y1
+    // |(x1 - x3)(y2 - y3) - (x2 - x3)(y1 - y3)|/2
+    calcArea() {
+      let x1 = this.vertexes.a.x;
+      let x2 = this.vertexes.b.x;
+      let x3 = this.vertexes.c.x;
+      let y1 = this.vertexes.a.y;
+      let y2 = this.vertexes.b.y;
+      let y3 = this.vertexes.c.y;
+
+      return Math.abs((x1 - x3) * (y2 - y3) - (x2 - x3) * (y1 - y3)) / 2
     }
 
     /**
@@ -123,6 +142,7 @@
   triangle.drawTriangle();
   // 3辺の合計長さを出力する
   $('#sum_sides').text(triangle.calcSumSides());
+  $('#area').text(triangle.calcArea());
 
 </script>
 
