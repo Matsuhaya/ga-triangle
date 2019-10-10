@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <style>
     .canvas {
       border: 1px solid;
@@ -15,6 +17,13 @@
 
 <body>
   <canvas id="canvas1" class="canvas"></canvas>
+  <table border="1">
+    <tbody>
+      <tr>
+        <td>3辺の合計長さ</td>
+        <td id="sum_sides"></td>
+      </tr>
+    </tbody>
 </body>
 
 <script>
@@ -65,6 +74,20 @@
       }
     }
 
+    // 三辺の長さの合計を返す
+    calcSumSides() {
+      let abx = this.vertexes.a.x - this.vertexes.b.x;
+      let aby = this.vertexes.a.y - this.vertexes.b.y;
+      let bcx = this.vertexes.b.x - this.vertexes.c.x;
+      let bcy = this.vertexes.b.y - this.vertexes.c.y;
+      let cax = this.vertexes.c.x - this.vertexes.a.x;
+      let cay = this.vertexes.c.y - this.vertexes.a.y;
+      let total = Math.sqrt(Math.pow(abx, 2) + Math.pow(aby, 2));
+      total += Math.sqrt(Math.pow(bcx, 2) + Math.pow(bcy, 2));
+      total += Math.sqrt(Math.pow(cax, 2) + Math.pow(cay, 2));
+      return total;
+    }
+
     /**
      * 三角形の頂点を返す静的メソッド
      * @return {array} vertex [x,y]
@@ -82,12 +105,24 @@
     for (let i = 0; i < 3; i++) {
       vertexes.push(Triangle.makeVertex())
     }
-    return new Triangle(vertexes);
-  }
-  let triangle = makeTriangle();
 
-  console.log(triangle);
+    // テスト用
+    let test = [
+      [100, 100],
+      [100, 200],
+      [200, 200]
+    ]
+    return new Triangle(test);
+
+    // return new Triangle(vertexes);
+  }
+
+  // 三角形のインスタンスを生成する
+  let triangle = makeTriangle();
+  // canvasに三角形を描画する
   triangle.drawTriangle();
+  // 3辺の合計長さを出力する
+  $('#sum_sides').text(triangle.calcSumSides());
 
 </script>
 
