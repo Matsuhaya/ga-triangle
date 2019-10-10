@@ -14,6 +14,21 @@
       border: 1px solid;
     }
 
+    .table {
+      width: 600px;
+    }
+
+    .table td {
+      width: 300px;
+    }
+
+    .table input {
+      width: 100%;
+      border: 0;
+      padding: 0;
+      text-align: center;
+    }
+
     .line {
       border-top: 1px solid #8c8b8b;
       width: 60%;
@@ -23,6 +38,10 @@
       margin: 0 auto;
       text-align: center;
     }
+
+    .top {
+      margin-top: 1em;
+    }
   </style>
 </head>
 
@@ -31,10 +50,10 @@
     <div class="canvas_wrapper center">
       <canvas id="canvas1" class="canvas"></canvas>
     </div>
-    <div class="center">
+    <div class="center top">
       <button id="generate">生成</button>
     </div>
-    <table border="1" class="table center">
+    <table border="1" class="table center top">
       <tbody>
         <tr>
           <td>三辺の合計長さ</td>
@@ -42,9 +61,7 @@
         </tr>
       </tbody>
     </table>
-
     <hr class="line">
-
     <table border="1" class="table center">
       <tr>
         <td>辺aの長さ</td>
@@ -68,6 +85,7 @@
       </tr>
       </tbody>
     </table>
+    <hr class="line">
   </div>
 </body>
 
