@@ -9,16 +9,46 @@
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <style>
+    .canvas_wrapper {
+      width: 1000px;
+    }
+
     .canvas {
       border: 1px solid;
+    }
+
+    .line {
+      border-top: 1px solid #8c8b8b;
+      width: 60%;
+    }
+
+    .center {
+      margin: 0 auto;
+      text-align: center;
     }
   </style>
 </head>
 
 <body>
-  <canvas id="canvas1" class="canvas"></canvas>
-  <table border="1">
-    <tbody>
+  <div class="main">
+    <div class="canvas_wrapper center">
+      <canvas id="canvas1" class="canvas"></canvas>
+    </div>
+    <div class="center">
+      <button>生成</button>
+    </div>
+    <table border="1" class="table center">
+      <tbody>
+        <tr>
+          <td>三辺の合計長さ</td>
+          <td><input type="text" id="input_sum_sides"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <hr class="line">
+
+    <table border="1" class="table center">
       <tr>
         <td>辺aの長さ</td>
         <td id="length_a"></td>
@@ -39,12 +69,14 @@
         <td>面積</td>
         <td id="area"></td>
       </tr>
-    </tbody>
+      </tbody>
+    </table>
+  </div>
 </body>
 
 <script>
-  const WIDTH = "500";
-  const HEIGHT = "500";
+  const WIDTH = "1000";
+  const HEIGHT = "1000";
   var canvas = document.getElementById("canvas1");
   canvas.width = WIDTH;
   canvas.height = HEIGHT;
