@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .canvas {
+      border: 1px solid;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas1" class="canvas"></canvas>
+</body>
+
+<script>
+  const WIDTH = "500";
+  const HEIGHT = "500";
+  var canvas = document.getElementById("canvas1");
+  canvas.width = WIDTH;
+  canvas.height = HEIGHT;
+
+  class Triangle {
+    /**
+     * @param {array} vertex1
+     * @param {array} vertex2
+     * @param {array} vertex3
+     **/
+    constructor(vertex1, vertex2, vertex3) {
+      this.vertexes = [vertex1, vertex2, vertex3];
+    }
+
+    // 三つの頂点を直線で繋いだ三角形をcanvasに描画する
+    drawTriangle() {
+      if (canvas.getContext) {
+        var ctx = canvas.getContext("2d");
+
+        ctx.beginPath();
+        ctx.moveTo(this.vertexes[0][0], this.vertexes[0][1]); //最初の点の場所
+        ctx.lineTo(this.vertexes[1][0], this.vertexes[1][1]); //2番目の点の場所
+        ctx.lineTo(this.vertexes[2][0], this.vertexes[2][1]); //3番目の点の場所
+        ctx.closePath();	//三角形の最後の線 closeさせる
+
+        ctx.strokeStyle = "rgb(0,0,0)"; //枠線の色
+        ctx.stroke();
+
+        ctx.fillStyle = "rgba(0,0,255,0.1)";//塗りつぶしの色
+        ctx.fill();
+      }
+    }
+
+    // 三角形の頂点を返す静的メソッド
+    static makeVertex() {
+      let vertex = [];
+      vertex.push(Math.random() * WIDTH);
+      vertex.push(Math.random() * HEIGHT);
+      return vertex;
+    }
+  }
+
+  let makeTriangle = () => {
+    let vertexes = [];
+    for (let i = 0; i < 3; i++) {
+      vertexes.push(Triangle.makeVertex())
+    }
+    return new Triangle(vertexes[0], vertexes[1], vertexes[2]);
+  }
+  let triangle = makeTriangle();
+
+  console.log(triangle);
+  triangle.drawTriangle();
+
+</script>
+
+</html>
