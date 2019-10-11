@@ -56,8 +56,8 @@
     <table border="1" class="table center top">
       <tbody>
         <tr>
-          <td>三辺の合計長さ</td>
-          <td><input type="text" id="input_sum_sides"></td>
+          <td>三辺の和</td>
+          <td><input type="number" id="input_sum_sides"></td>
         </tr>
       </tbody>
     </table>
@@ -76,7 +76,7 @@
         <td id="length_c"></td>
       </tr>
       <tr>
-        <td>3辺の合計長さ</td>
+        <td>3辺の和</td>
         <td id="sum_sides"></td>
       </tr>
       <tr>
@@ -98,7 +98,7 @@
 
   class Triangle {
     /**
-     * a,b,cという三つの頂点をもつ三角形
+     * 頂点A,B,Cと辺a,b,cを定義した三角形
      * @param {object} vertexes
      **/
     constructor(vertexes) {
@@ -119,8 +119,8 @@
       this.length = {};
     }
 
-    // ３辺の長さを計算する
-    calcLength() {
+    // ３辺の長さを計算してプロパティに定義する
+    setLength() {
       this.length.a = Math.sqrt(
         Math.pow((this.vertexes.B.x2 - this.vertexes.C.x3), 2) +
         Math.pow((this.vertexes.B.y2 - this.vertexes.C.y3), 2)
@@ -154,7 +154,7 @@
       }
     }
 
-    // ３辺の長さの合計を返す
+    // ３辺の和を返す
     // 下記URLの図を参照
     // https://math-jp.net/2018/08/26/yogenteiri-kakudo/
     calcSumSides() {
@@ -177,21 +177,50 @@
     }
 
     /**
-     * 三角形の頂点を返す静的メソッド
+     * キャンバス範囲内のx,y座標を返す静的メソッド
      * @return {array} vertex [x,y]
      **/
-    static makeVertex() {
+    static generateVertex() {
       let vertex = [];
       vertex.push(Math.random() * WIDTH);
       vertex.push(Math.random() * HEIGHT);
       return vertex;
     }
+
+    /**
+     * 三角形の存在条件を満たす３つの辺の組み合わせを、ランダムに生成して返す静的メソッド
+     * 三角形の存在条件より a<b+c（b,cは共にaより小さい)
+     * https://mathmatik.jp/2017/02/16/tri_exist_condition/
+     * @param {Number} sum_sides
+     * @return {Number} side
+     **/
+    static generateSides(sum_sides) {
+      let sides = [];
+      let limit_side = sum_sides / 2;
+      // １つ目の辺aを生成する条件
+      let a = Math.random() * limit_side;
+
+      // ２つ目の辺bを生成する条件
+      let min_sides = sum_sides - limit_side - a;
+      let b = min_sides + Math.random() * (limit_side - min_sides);
+
+      // ３つ目の辺cを生成する条件
+      let c = sum_sides - a - b;
+      sides = [a, b, c];
+      return sides;
+    }
   }
 
   let generateTriangle = () => {
     let vertexes = [];
-    for (let i = 0; i < 3; i++) {
-      vertexes.push(Triangle.makeVertex())
+    let sum_sides = $('#input_sum_sides').val();
+
+    if (!sum_sides) {
+      for (let i = 0; i < 3; i++) {
+        vertexes.push(Triangle.generateVertex());
+      }
+    } else {
+      let sides = Triangle.generateSides(sum_sides);
     }
 
     // テスト用
@@ -217,7 +246,7 @@
   let start = () => {
     // 三角形のインスタンスを生成する
     let triangle = generateTriangle();
-    triangle.calcLength();
+    triangle.setLength();
     // canvasに三角形を描画する
     triangle.drawTriangle();
     // 計算結果を出力する
@@ -233,6 +262,11 @@
     start();
   }
   );
+
+  // テスト
+  let sides = Triangle.generateSides(10);
+  let sum = sides[0] + sides[1] + sides[2];
+  console.log({ sides }, { sum })
 </script>
 
 </html>
