@@ -278,7 +278,13 @@ let start = () => {
   $('#side_a').text(Math.floor(triangle.sides.a));
   $('#side_b').text(Math.floor(triangle.sides.b));
   $('#side_c').text(Math.floor(triangle.sides.c));
-  $('#sum_sides').text(Math.floor(triangle.calcSumSides()));
+  let sum_sides = triangle.calcSumSides();
+  console.log(sum_sides)
+  $('#sum_sides').text(
+    (sum_sides < $('#input_sum_sides').val()) ?
+      Math.ceil(sum_sides) :
+      Math.floor(sum_sides)
+  );
   $('#area').text(Math.floor(triangle.calcArea()));
 }
 
