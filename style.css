@@ -1,0 +1,33 @@
+ .canvas_wrapper {
+      width: 1200px;
+      border: 1px solid;
+    }
+
+    .table {
+      width: 600px;
+    }
+
+    .table td {
+      width: 300px;
+    }
+
+    .table input {
+      width: 100%;
+      border: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    .line {
+      border-top: 1px solid #8c8b8b;
+      width: 60%;
+    }
+
+    .center {
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .top {
+      margin-top: 1em;
+    }
