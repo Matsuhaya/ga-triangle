@@ -1,5 +1,5 @@
-const WIDTH = "500";
-const HEIGHT = "500";
+const WIDTH = "1000";
+const HEIGHT = "1000";
 var canvas = document.getElementById("canvas1");
 canvas.width = WIDTH;
 canvas.height = HEIGHT;
@@ -230,7 +230,6 @@ let resetCanvas = () => {
 let drawGrid = () => {
   if (canvas.getContext) {
     var ctx = canvas.getContext("2d");
-
     ctx.beginPath();
     const STEP = 100;
     for (let w = 0; w < WIDTH + 1; w += STEP) {
@@ -260,14 +259,27 @@ let start = () => {
   triangle.drawTriangle();
   // 計算結果を出力する
 
-  $('#vertex_A').text(`${triangle.vertexes.A.x1}, ${triangle.vertexes.A.y1}`);
-  $('#vertex_B').text(`${triangle.vertexes.B.x2}, ${triangle.vertexes.B.y2}`);
-  $('#vertex_C').text(`${triangle.vertexes.C.x3}, ${triangle.vertexes.C.y3}`);
-  $('#side_a').text(triangle.sides.a);
-  $('#side_b').text(triangle.sides.b);
-  $('#side_c').text(triangle.sides.c);
-  $('#sum_sides').text(triangle.calcSumSides());
-  $('#area').text(triangle.calcArea());
+  const paddingZero = (num) => {
+    return ("000" + num).slice(-3);  //ゼロ埋めで10桁にする
+  }
+
+  $('#vertex_A').text(
+    `x1: ${paddingZero(Math.floor(triangle.vertexes.A.x1))},
+     y1: ${paddingZero(Math.floor(triangle.vertexes.A.y1))}`
+  );
+  $('#vertex_B').text(
+    `x2: ${paddingZero(Math.floor(triangle.vertexes.B.x2))},
+     y2: ${paddingZero(Math.floor(triangle.vertexes.B.y2))}`
+  );
+  $('#vertex_C').text(
+    `x3: ${paddingZero(Math.floor(triangle.vertexes.C.x3))},
+     y3: ${paddingZero(Math.floor(triangle.vertexes.C.y3))}`
+  );
+  $('#side_a').text(Math.floor(triangle.sides.a));
+  $('#side_b').text(Math.floor(triangle.sides.b));
+  $('#side_c').text(Math.floor(triangle.sides.c));
+  $('#sum_sides').text(Math.floor(triangle.calcSumSides()));
+  $('#area').text(Math.floor(triangle.calcArea()));
 }
 
 $('#generate').click(() => {
