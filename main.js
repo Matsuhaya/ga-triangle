@@ -44,7 +44,7 @@ class Triangle {
   }
 
   // 三つの頂点を直線で繋いだ三角形をcanvasに描画する
-  // y軸は反転させて表示させる（y=HEIGHT-y')
+  // y軸は反転させて表示させる（y = HEIGHT - y')
   drawTriangle() {
     if (canvas.getContext) {
       var ctx = canvas.getContext("2d");
@@ -92,36 +92,76 @@ class Triangle {
 
   /**
    * キャンバス範囲内のx,y座標を返す静的メソッド
-       * @return {array} vertex [x,y]
-    **/
+   * @return {array} vertex [x,y]
+   **/
   static generateVertex() {
     let x = Math.random() * WIDTH;
-    let y = Math.random() * HEIGHT; // 座標変換 y = HEIGHT - y'
+    let y = Math.random() * HEIGHT;
     return [x, y];
   }
 
   /**
-   * 三角形の存在条件を満たす３つの辺の組み合わせを、ランダムに生成して返す静的メソッド
-       * 三角形の存在条件より a<b+c（b,cは共にaより小さい)
-    * https://mathmatik.jp/2017/02/16/tri_exist_condition/
-       * @param {Number} sum_sides
-       * @return {Number} side
-    **/
-  static generateSides(sum_sides) {
-    let sides = [];
+   * 三角形の存在条件を満たすように、点B,Cを生成する
+   * 2つの円の位置関係を決定する
+   * https://mathtrain.jp/nien
+   * 三角形の存在条件より a<b+c（b,cは共にaより小さい)
+   * https://mathmatik.jp/2017/02/16/tri_exist_condition/
+   * @param {Number} sum_sides
+   * @return {Number} side
+   **/
+  static generateTwoVertexes(A, sum_sides) {
     let limit_side = sum_sides / 2;
-    // １つ目の辺aを生成する条件
-    let a = Math.random() * limit_side;
 
-    // ２つ目の辺bを生成する条件
-    let min_sides = sum_sides - limit_side - a;
-    let b = min_sides + Math.random() * (limit_side - min_sides);
+    // x2とy2は点Aからの相対座標
+    let d = Math.random() * limit_side;
+    let _θ = Math.random() * 2 * Math.PI;
+    let x1 = d * Math.cos(_θ);
+    let y1 = d * Math.sin(_θ);
 
-    // ３つ目の辺cを生成する条件
-    let c = sum_sides - a - b;
-    sides = [a, b, c];
-    console.log(a + b + c);
-    return sides;
+    // 2つの円が2点で交わるようなr1,r2の生成
+    let r1, r2;
+    do {
+      // 点Aを中心とするr1を決定
+      r1 = Math.random() * limit_side;
+      // 点Bを中心とするr2を決定
+      r2 = sum_sides - d - r1;
+    }
+    while (d < Math.abs(r1 - r2) || d > Math.abs(r1 + r2));
+
+    console.log(d > Math.abs(r1 - r2));
+    console.log(d < Math.abs(r1 + r2));
+
+    // 点Bの座標
+    let B = [A[0] + x1, A[1] + y1];
+
+
+    let a = (x1 ** 2 + y1 ** 2 + r1 ** 2 - r2 ** 2) / 2
+    console.log({ a });
+
+    let x = (a * x1 + y1 * Math.sqrt((x1 ** 2 + y1 ** 2) * r1 ** 2 - a ** 2)) / (x1 ** 2 + y1 ** 2);
+    let y = (a * y1 - x1 * Math.sqrt((x1 ** 2 + y1 ** 2) * r1 ** 2 - a ** 2)) / (x1 ** 2 + y1 ** 2);
+
+    // 点Cの座標
+    let C = [x + A[0], y + A[1]];
+
+    // 以下キャンバス描画
+    if (canvas.getContext) {
+      var ctx = canvas.getContext("2d");
+      ctx.beginPath();
+      ctx.arc(A[0], HEIGHT - A[1], r1, 0 * Math.PI / 180, 360 * Math.PI / 180, false);
+      ctx.strokeStyle = "purple";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(B[0], HEIGHT - B[1], r2, 0 * Math.PI / 180, 360 * Math.PI / 180, false);
+      ctx.strokeStyle = "purple";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+    console.log({ A }, { B }, { C });
+
+    return [B, C];
   }
 }
 
@@ -135,15 +175,13 @@ let generateTriangle = () => {
       vertexes.push(Triangle.generateVertex());
     }
   } else {
-    let sides = Triangle.generateSides(sum_sides);
-    let [a, b, c] = sides;
     // 頂点A(x1,x2)：点Aをランダム生成
     let A = Triangle.generateVertex();
+    let [B, C] = Triangle.generateTwoVertexes(A, sum_sides);
 
     vertexes.push(A);
     vertexes.push(B);
     vertexes.push(C);
-    console.log({ sides });
   }
   return new Triangle(vertexes);
 }
