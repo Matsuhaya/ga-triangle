@@ -62,9 +62,9 @@ class Triangle {
       ctx.fill();
 
       ctx.font = "48px serif";
-      ctx.fillText("A", this.vertexes.A.x1 + 10, HEIGHT - this.vertexes.A.y1 + 10);
-      ctx.fillText("B", this.vertexes.B.x2 + 10, HEIGHT - this.vertexes.B.y2 + 10);
-      ctx.fillText("C", this.vertexes.C.x3 + 10, HEIGHT - this.vertexes.C.y3 + 10);
+      ctx.fillText("A", this.vertexes.A.x1, HEIGHT - this.vertexes.A.y1);
+      ctx.fillText("B", this.vertexes.B.x2, HEIGHT - this.vertexes.B.y2);
+      ctx.fillText("C", this.vertexes.C.x3, HEIGHT - this.vertexes.C.y3);
     }
   }
 
@@ -106,45 +106,74 @@ class Triangle {
    * https://mathtrain.jp/nien
    * 三角形の存在条件より a<b+c（b,cは共にaより小さい)
    * https://mathmatik.jp/2017/02/16/tri_exist_condition/
+   * 円と円の交点を求める
+   * https://shogo82148.github.io/homepage/memo/geometry/circle-cross.html
    * @param {Number} sum_sides
    * @return {Number} side
    **/
   static generateTwoVertexes(A, sum_sides) {
     let limit_side = sum_sides / 2;
-
-    // x2とy2は点Aからの相対座標
-    let d = Math.random() * limit_side;
-    let _θ = Math.random() * 2 * Math.PI;
-    let x1 = d * Math.cos(_θ);
-    let y1 = d * Math.sin(_θ);
+    let init = true;
 
     // 2つの円が2点で交わるようなr1,r2の生成
-    let r1, r2;
-    do {
-      // 点Aを中心とするr1を決定
-      r1 = Math.random() * limit_side;
-      // 点Bを中心とするr2を決定
-      r2 = sum_sides - d - r1;
+    let r1, r2, B, C;
+    const generateTwoCircle = () => {
+
+      // x2とy2は点Aからの相対座標
+      let d = Math.random() * limit_side;
+      let _θ = Math.random() * 2 * Math.PI;
+      let x1 = d * Math.cos(_θ);
+      let y1 = d * Math.sin(_θ);
+
+      do {
+        // 点Aを中心とするr1を決定
+        r1 = Math.random() * limit_side;
+        // 点Bを中心とするr2を決定
+        r2 = sum_sides - d - r1;
+      }
+      while (d < Math.abs(r1 - r2) || d > Math.abs(r1 + r2));
+
+      // 点Bの座標
+      // B = [x1, y1]
+      B = [x1 + A[0], y1 + A[1]];
+      // 点Bがキャンバス内に存在しない場合に実行する再帰関数
+      if (B[0] < 0 || B[0] > WIDTH || B[1] < 0 || B[1] > HEIGHT) {
+        return generateTwoCircle();
+      }
+
+
+      let a = (x1 ** 2 + y1 ** 2 + r1 ** 2 - r2 ** 2) / 2
+      let x = (a * x1 + y1 * Math.sqrt((x1 ** 2 + y1 ** 2) * r1 ** 2 - a ** 2)) / (x1 ** 2 + y1 ** 2);
+      let y = (a * y1 - x1 * Math.sqrt((x1 ** 2 + y1 ** 2) * r1 ** 2 - a ** 2)) / (x1 ** 2 + y1 ** 2);
+      // 点Cの座標
+      C = [x + A[0], y + A[1]];
+
+      console.log(`x+A[0]:${x + A[0]}`, `y + A[1]:${y + A[1]}`);
+      // x,yの交点の内１つ目がキャンバス内に存在しない場合に実行する
+      if (C[0] < 0 || C[0] > WIDTH || C[1] < 0 || C[1] > HEIGHT) {
+        console.log("x,y are out(1)");
+        console.log({ A }, { B }, { C });
+        x = (a * x1 - y1 * Math.sqrt((x1 ** 2 + y1 ** 2) * r1 ** 2 - a ** 2)) / (x1 ** 2 + y1 ** 2);
+        y = (a * y1 + x1 * Math.sqrt((x1 ** 2 + y1 ** 2) * r1 ** 2 - a ** 2)) / (x1 ** 2 + y1 ** 2);
+        C = [x + A[0], y + A[1]];
+      }
+
+      console.log(`x+A[0]:${x + A[0]}`, `y + A[1]:${y + A[1]}`);
+      // x,yの交点の内2つ目がキャンバス内に存在しない場合に実行する再帰関数
+      if (C[0] < 0 || C[0] > WIDTH || C[1] < 0 || C[1] > HEIGHT) {
+        console.log("x,y are out(2)");
+        console.log({ A }, { B }, { C });
+        return generateTwoCircle();
+      }
+      console.log({ C })
     }
-    while (d < Math.abs(r1 - r2) || d > Math.abs(r1 + r2));
 
-    console.log(d > Math.abs(r1 - r2));
-    console.log(d < Math.abs(r1 + r2));
+    if (init) {
+      init = false;
+      generateTwoCircle();
+    }
 
-    // 点Bの座標
-    let B = [A[0] + x1, A[1] + y1];
-
-
-    let a = (x1 ** 2 + y1 ** 2 + r1 ** 2 - r2 ** 2) / 2
-    console.log({ a });
-
-    let x = (a * x1 + y1 * Math.sqrt((x1 ** 2 + y1 ** 2) * r1 ** 2 - a ** 2)) / (x1 ** 2 + y1 ** 2);
-    let y = (a * y1 - x1 * Math.sqrt((x1 ** 2 + y1 ** 2) * r1 ** 2 - a ** 2)) / (x1 ** 2 + y1 ** 2);
-
-    // 点Cの座標
-    let C = [x + A[0], y + A[1]];
-
-    // 以下キャンバス描画
+    // 2つの円をキャンバス描画
     if (canvas.getContext) {
       var ctx = canvas.getContext("2d");
       ctx.beginPath();
@@ -159,6 +188,7 @@ class Triangle {
       ctx.lineWidth = 2;
       ctx.stroke();
     }
+    console.log("Let's drowing")
     console.log({ A }, { B }, { C });
 
     return [B, C];
