@@ -1,4 +1,4 @@
-import Triangle from './triangle.js';
+import Triangle from './Triangle.js';
 
 let generateTriangle = () => {
   let vertexes = [];
@@ -55,19 +55,22 @@ let drawGrid = () => {
   }
 }
 
-// let triangle2;
 let start = () => {
   // 三角形のインスタンスを生成する
   let triangle = generateTriangle();
   triangle.setLength();
+  triangle.calcSumSides();
+  triangle.calcArea();
+
   // canvasに三角形を描画する
   triangle.drawTriangle();
-  // 計算結果を出力する
 
+  //ゼロ埋めで10桁にする
   const paddingZero = (num) => {
-    return ("000" + num).slice(-3);  //ゼロ埋めで10桁にする
+    return ("000" + num).slice(-3);
   }
 
+  // 計算結果を出力する
   $('#vertex_A').text(
     `x1: ${paddingZero(Math.floor(triangle.vertexes.A.x1))},
      y1: ${paddingZero(Math.floor(triangle.vertexes.A.y1))}`
@@ -83,14 +86,12 @@ let start = () => {
   $('#side_a').text(Math.floor(triangle.sides.a));
   $('#side_b').text(Math.floor(triangle.sides.b));
   $('#side_c').text(Math.floor(triangle.sides.c));
-  let sum_sides = triangle.calcSumSides();
-  console.log(sum_sides)
   $('#sum_sides').text(
-    (sum_sides < $('#input_sum_sides').val()) ?
-      Math.ceil(sum_sides) :
-      Math.floor(sum_sides)
+    (triangle.sum_sides < $('#input_sum_sides').val()) ?
+      Math.ceil(triangle.sum_sides) :
+      Math.floor(triangle.sum_sides)
   );
-  $('#area').text(Math.floor(triangle.calcArea()));
+  $('#area').text(Math.floor(triangle.area));
 }
 
 $('#generate').click(() => {
@@ -100,6 +101,10 @@ $('#generate').click(() => {
 }
 );
 
-window.onload = () => {
-  drawGrid();
+const init = () => {
+  window.onload = () => {
+    drawGrid();
+  }
 }
+
+init();

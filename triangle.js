@@ -19,6 +19,8 @@ export default class Triangle {
       }
     };
     this.sides = {};
+    this.sum_sides;
+    this.area;
   }
 
   // ３辺の長さを計算してプロパティに定義する
@@ -66,7 +68,7 @@ export default class Triangle {
   // 下記URLの図を参照
   // https://math-jp.net/2018/08/26/yogenteiri-kakudo/
   calcSumSides() {
-    return this.sides.a + this.sides.b + this.sides.c;
+    this.sum_sides = this.sides.a + this.sides.b + this.sides.c;
   }
 
   // 面積を返す
@@ -81,7 +83,7 @@ export default class Triangle {
     let y2 = this.vertexes.B.y2;
     let y3 = this.vertexes.C.y3;
 
-    return Math.abs((x1 - x3) * (y2 - y3) - (x2 - x3) * (y1 - y3)) / 2
+    this.area = Math.abs((x1 - x3) * (y2 - y3) - (x2 - x3) * (y1 - y3)) / 2;
   }
 
   /**
