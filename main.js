@@ -55,21 +55,13 @@ let drawGrid = () => {
   }
 }
 
-let start = () => {
-  // 三角形のインスタンスを生成する
-  let triangle = generateTriangle();
-  triangle.setLength();
-  triangle.calcSumSides();
-  triangle.calcArea();
+// ゼロ埋めで10桁にする
+const paddingZero = (num) => {
+  return ("000" + num).slice(-3);
+}
 
-  // canvasに三角形を描画する
-  triangle.drawTriangle();
-
-  //ゼロ埋めで10桁にする
-  const paddingZero = (num) => {
-    return ("000" + num).slice(-3);
-  }
-
+// 三角形のプロパティを表に出力する
+const outputTriangle = (triangle) => {
   // 計算結果を出力する
   $('#vertex_A').text(
     `x1: ${paddingZero(Math.floor(triangle.vertexes.A.x1))},
@@ -92,6 +84,17 @@ let start = () => {
       Math.floor(triangle.sum_sides)
   );
   $('#area').text(Math.floor(triangle.area));
+}
+
+let start = () => {
+  // 三角形のインスタンスを生成する
+  let triangle = generateTriangle();
+  triangle.setLength();
+  triangle.calcSumSides();
+  triangle.calcArea();
+  triangle.drawTriangle();
+
+  outputTriangle(triangle);
 }
 
 $('#generate').click(() => {
