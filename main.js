@@ -1,28 +1,7 @@
-import Triangle from './Triangle.js';
-
-let generateTriangle = () => {
-  let vertexes = [];
-  let sum_sides = $('#input_sum_sides').val();
-
-  if (!sum_sides) {
-    // 3つの頂点をランダムに生成
-    for (let i = 0; i < 3; i++) {
-      vertexes.push(Triangle.generateVertex());
-    }
-  } else {
-    // 頂点A(x1,x2)：点Aをランダム生成
-    let A = Triangle.generateVertex();
-    let [B, C] = Triangle.generateTwoVertexes(A, sum_sides);
-
-    vertexes.push(A);
-    vertexes.push(B);
-    vertexes.push(C);
-  }
-  return new Triangle(vertexes);
-}
+import Population from './Population.js';
 
 // キャンバスを白に塗りつぶす
-let resetCanvas = () => {
+const resetCanvas = () => {
   if (canvas.getContext) {
     var ctx = canvas.getContext("2d");
     ctx.fillStyle = "rgba(255, 255, 255)";
@@ -32,7 +11,7 @@ let resetCanvas = () => {
 
 // グリッド線を引く
 // 三つの頂点を直線で繋いだ三角形をcanvasに描画する
-let drawGrid = () => {
+const drawGrid = () => {
   if (canvas.getContext) {
     var ctx = canvas.getContext("2d");
     ctx.beginPath();
@@ -54,6 +33,32 @@ let drawGrid = () => {
     ctx.fill();
   }
 }
+
+// 三つの頂点を直線で繋いだ三角形をcanvasに描画する
+// y軸は反転させて表示させる（y = HEIGHT - y')
+const drawTriangle = (triangle) => {
+  if (canvas.getContext) {
+    var ctx = canvas.getContext("2d");
+
+    ctx.beginPath();
+    ctx.moveTo(triangle.vertexes.A.x1, HEIGHT - triangle.vertexes.A.y1); //最初の点の場所
+    ctx.lineTo(triangle.vertexes.B.x2, HEIGHT - triangle.vertexes.B.y2); //2番目の点の場所
+    ctx.lineTo(triangle.vertexes.C.x3, HEIGHT - triangle.vertexes.C.y3); //3番目の点の場所
+    ctx.closePath();	//三角形の最後の線 closeさせる
+
+    ctx.strokeStyle = "rgb(0,0,0)"; //枠線の色
+    ctx.stroke();
+
+    ctx.fillStyle = "rgba(0,0,255,0.1)";//塗りつぶしの色
+    ctx.fill();
+
+    ctx.font = "48px serif";
+    ctx.fillText("A", triangle.vertexes.A.x1, HEIGHT - triangle.vertexes.A.y1);
+    ctx.fillText("B", triangle.vertexes.B.x2, HEIGHT - triangle.vertexes.B.y2);
+    ctx.fillText("C", triangle.vertexes.C.x3, HEIGHT - triangle.vertexes.C.y3);
+  }
+}
+
 
 // ゼロ埋めで10桁にする
 const paddingZero = (num) => {
@@ -86,14 +91,15 @@ const outputTriangle = (triangle) => {
   $('#area').text(Math.floor(triangle.area));
 }
 
-let start = () => {
-  // 三角形のインスタンスを生成する
-  let triangle = generateTriangle();
-  triangle.setLength();
-  triangle.calcSumSides();
-  triangle.calcArea();
-  triangle.drawTriangle();
+const start = () => {
+  // let generation_size = $('#input_generation_size').val();
+  let population_size = $('#input_population_size').val();
+  let population = new Population(population_size);
+  population.generatePopulation();
 
+  // 三角形の描画
+  let triangle = population.triangles[0];
+  drawTriangle(triangle);
   outputTriangle(triangle);
 }
 

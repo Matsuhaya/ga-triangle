@@ -39,31 +39,6 @@ export default class Triangle {
     );
   }
 
-  // 三つの頂点を直線で繋いだ三角形をcanvasに描画する
-  // y軸は反転させて表示させる（y = HEIGHT - y')
-  drawTriangle() {
-    if (canvas.getContext) {
-      var ctx = canvas.getContext("2d");
-
-      ctx.beginPath();
-      ctx.moveTo(this.vertexes.A.x1, HEIGHT - this.vertexes.A.y1); //最初の点の場所
-      ctx.lineTo(this.vertexes.B.x2, HEIGHT - this.vertexes.B.y2); //2番目の点の場所
-      ctx.lineTo(this.vertexes.C.x3, HEIGHT - this.vertexes.C.y3); //3番目の点の場所
-      ctx.closePath();	//三角形の最後の線 closeさせる
-
-      ctx.strokeStyle = "rgb(0,0,0)"; //枠線の色
-      ctx.stroke();
-
-      ctx.fillStyle = "rgba(0,0,255,0.1)";//塗りつぶしの色
-      ctx.fill();
-
-      ctx.font = "48px serif";
-      ctx.fillText("A", this.vertexes.A.x1, HEIGHT - this.vertexes.A.y1);
-      ctx.fillText("B", this.vertexes.B.x2, HEIGHT - this.vertexes.B.y2);
-      ctx.fillText("C", this.vertexes.C.x3, HEIGHT - this.vertexes.C.y3);
-    }
-  }
-
   // ３辺の和を返す
   // 下記URLの図を参照
   // https://math-jp.net/2018/08/26/yogenteiri-kakudo/
@@ -86,11 +61,33 @@ export default class Triangle {
     this.area = Math.abs((x1 - x3) * (y2 - y3) - (x2 - x3) * (y1 - y3)) / 2;
   }
 
+  // 三角形の頂点の位置を決める
+  static makeAllVertexes = () => {
+    let vertexes = [];
+    let sum_sides = $('#input_sum_sides').val();
+
+    if (!sum_sides) {
+      // 3つの頂点をランダムに生成
+      for (let i = 0; i < 3; i++) {
+        vertexes.push(this.makeRandVertex());
+      }
+    } else {
+      // 頂点A(x1,x2)：点Aをランダム生成
+      let A = this.makeRandVertex();
+      let [B, C] = this.makeTwoVertexes(A, sum_sides);
+
+      vertexes.push(A);
+      vertexes.push(B);
+      vertexes.push(C);
+    }
+    return vertexes;
+  }
+
   /**
    * キャンバス範囲内のx,y座標を返す静的メソッド
    * @return {array} vertex [x,y]
    **/
-  static generateVertex() {
+  static makeRandVertex() {
     let x = Math.random() * WIDTH;
     let y = Math.random() * HEIGHT;
     return [x, y];
@@ -107,13 +104,13 @@ export default class Triangle {
    * @param {Number} sum_sides
    * @return {Number} side
    **/
-  static generateTwoVertexes(A, sum_sides) {
+  static makeTwoVertexes(A, sum_sides) {
     let limit_side = sum_sides / 2;
     let init = true;
 
     // 2つの円が2点で交わるようなr1,r2の生成
     let r1, r2, B, C;
-    const generateTwoCircle = () => {
+    const makeTwoCircle = () => {
 
       // x2とy2は点Aからの相対座標
       let d = Math.random() * limit_side;
@@ -134,7 +131,7 @@ export default class Triangle {
       B = [x1 + A[0], y1 + A[1]];
       // 点Bがキャンバス内に存在しない場合に実行する再帰関数
       if (B[0] < 0 || B[0] > WIDTH || B[1] < 0 || B[1] > HEIGHT) {
-        return generateTwoCircle();
+        return makeTwoCircle();
       }
 
 
@@ -159,14 +156,14 @@ export default class Triangle {
       if (C[0] < 0 || C[0] > WIDTH || C[1] < 0 || C[1] > HEIGHT) {
         console.log("x,y are out(2)");
         console.log({ A }, { B }, { C });
-        return generateTwoCircle();
+        return makeTwoCircle();
       }
       console.log({ C })
     }
 
     if (init) {
       init = false;
-      generateTwoCircle();
+      makeTwoCircle();
     }
 
     // 2つの円をキャンバス描画
