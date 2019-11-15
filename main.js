@@ -98,9 +98,12 @@ const start = () => {
   population.generatePopulation();
 
   // 三角形の描画
-  let triangle = population.triangles[0];
-  drawTriangle(triangle);
-  outputTriangle(triangle);
+  // let triangle = population.triangles[0];
+  let best_triangle = population.best_triangle;
+  console.log('population.triangles:', population.triangles);
+  console.log('best_triangle:', best_triangle);
+  drawTriangle(best_triangle);
+  outputTriangle(best_triangle);
 }
 
 $('#generate').click(() => {
