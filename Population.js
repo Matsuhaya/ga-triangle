@@ -14,17 +14,11 @@ export default class Population {
   generatePopulation() {
     for (let i = 0; i < this.size; i++) {
       let triangle = this.generateTriangle();
-      console.log('triangle:', triangle);
-      if (i === 0) {
-        this.updateBestTriangle(triangle);
-      } else {
-        this.compareArea(triangle);
-      }
       this.triangles.push(triangle);
     }
   }
 
-  generateTriangle = () => {
+  generateTriangle() {
     let vertexes = Triangle.makeAllVertexes();
     let triangle = new Triangle(vertexes);
     triangle.setLength();
@@ -33,13 +27,32 @@ export default class Population {
     return triangle;
   }
 
-  compareArea = (triangle) => {
+  compareArea(triangle) {
     if (triangle.area > this.best_triangle.area) {
       this.updateBestTriangle(triangle)
     }
   }
 
-  updateBestTriangle = (triangle) => {
+  updateBestTriangle(triangle) {
     this.best_triangle = triangle;
+  }
+
+  doTournament(size) {
+    let tournament_triangles = Array.from(this.triangles);
+    let targets = [] //コンソールでのトーナメント対象確認用
+
+    for (let i = 0; i < size; i++) {
+      let rand_indent = Math.floor(Math.random() * tournament_triangles.length);
+      targets.push(tournament_triangles[rand_indent]);
+      tournament_triangles.splice(rand_indent, 1);
+
+      if (i === 0) {
+        this.updateBestTriangle(targets[0]);
+      } else {
+        this.compareArea(targets[i]);
+      }
+    }
+
+    console.log('targets:', targets);
   }
 }
