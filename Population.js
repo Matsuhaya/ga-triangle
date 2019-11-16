@@ -24,6 +24,7 @@ export default class Population {
     triangle.setLength();
     triangle.calcSumSides();
     triangle.calcArea();
+    triangle.generateChromosome();
     return triangle;
   }
 

@@ -60,7 +60,7 @@ const drawTriangle = (triangle) => {
 }
 
 
-// ゼロ埋めで10桁にする
+// ゼロ埋めで3桁にする
 const paddingZero = (num) => {
   return ("000" + num).slice(-3);
 }
@@ -69,16 +69,16 @@ const paddingZero = (num) => {
 const outputTriangle = (triangle) => {
   // 計算結果を出力する
   $('#vertex_A').text(
-    `x1: ${paddingZero(Math.floor(triangle.vertexes.A.x1))},
-     y1: ${paddingZero(Math.floor(triangle.vertexes.A.y1))}`
+    `x1: ${paddingZero(triangle.vertexes.A.x1)},
+     y1: ${paddingZero(triangle.vertexes.A.y1)}`
   );
   $('#vertex_B').text(
-    `x2: ${paddingZero(Math.floor(triangle.vertexes.B.x2))},
-     y2: ${paddingZero(Math.floor(triangle.vertexes.B.y2))}`
+    `x2: ${paddingZero(triangle.vertexes.B.x2)},
+     y2: ${paddingZero(triangle.vertexes.B.y2)}`
   );
   $('#vertex_C').text(
-    `x3: ${paddingZero(Math.floor(triangle.vertexes.C.x3))},
-     y3: ${paddingZero(Math.floor(triangle.vertexes.C.y3))}`
+    `x3: ${paddingZero(triangle.vertexes.C.x3)},
+     y3: ${paddingZero(triangle.vertexes.C.y3)}`
   );
   $('#side_a').text(Math.floor(triangle.sides.a));
   $('#side_b').text(Math.floor(triangle.sides.b));

@@ -21,6 +21,7 @@ export default class Triangle {
     this.sides = {};
     this.sum_sides;
     this.area;
+    this.chromosome;
   }
 
   // ３辺の長さを計算してプロパティに定義する
@@ -61,8 +62,31 @@ export default class Triangle {
     this.area = Math.abs((x1 - x3) * (y2 - y3) - (x2 - x3) * (y1 - y3)) / 2;
   }
 
+  generateChromosome() {
+    this.chromosome =
+      this.constructor.paddingZero(
+        this.constructor.convertBinary(this.vertexes.A.x1)
+      ) +
+      this.constructor.paddingZero(
+        this.constructor.convertBinary(this.vertexes.A.y1)
+      ) +
+      this.constructor.paddingZero(
+        this.constructor.convertBinary(this.vertexes.B.x2)
+      ) +
+      this.constructor.paddingZero(
+        this.constructor.convertBinary(this.vertexes.B.y2)
+      ) +
+      this.constructor.paddingZero(
+        this.constructor.convertBinary(this.vertexes.C.x3)
+      ) +
+      this.constructor.paddingZero(
+        this.constructor.convertBinary(this.vertexes.C.y3)
+      );
+    console.log(this.chromosome.length);
+  }
+
   // 三角形の頂点の位置を決める
-  static makeAllVertexes = () => {
+  static makeAllVertexes() {
     let vertexes = [];
     // 3つの頂点をランダムに生成
     for (let i = 0; i < 3; i++) {
@@ -80,4 +104,14 @@ export default class Triangle {
     let y = Math.floor(Math.random() * HEIGHT);
     return [x, y];
   }
+
+  static convertBinary(num) {
+    return num.toString(2);
+  }
+
+  // ゼロ埋めで10桁にする
+  static paddingZero = (num) => {
+    return ("0000000000" + num).slice(-10);
+  }
+
 }
