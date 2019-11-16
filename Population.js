@@ -9,6 +9,7 @@ export default class Population {
     this.size = size;
     this.triangles = [];
     this.best_triangle;
+    this.second_triangle;
   }
 
   generatePopulation() {
@@ -30,12 +31,17 @@ export default class Population {
 
   compareArea(triangle) {
     if (triangle.area > this.best_triangle.area) {
+      this.updateSecondTriangle();
       this.updateBestTriangle(triangle)
     }
   }
 
   updateBestTriangle(triangle) {
     this.best_triangle = triangle;
+  }
+
+  updateSecondTriangle() {
+    this.second_triangle = this.best_triangle;
   }
 
   doTournament(size) {
@@ -56,4 +62,5 @@ export default class Population {
 
     console.log('targets:', targets);
   }
+
 }

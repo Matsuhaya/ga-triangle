@@ -101,8 +101,10 @@ const start = () => {
 
   // 三角形の描画
   let best_triangle = population.best_triangle;
+  let second_triangle = population.second_triangle;
   console.log('population.triangles:', population.triangles);
   console.log('best_triangle:', best_triangle);
+  console.log('second_triangle:', second_triangle);
   drawTriangle(best_triangle);
   outputTriangle(best_triangle);
 }
