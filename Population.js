@@ -2,8 +2,7 @@ import Triangle from './Triangle.js';
 
 export default class Population {
   /**
-   * @param size 何世代か
-   * @param population １世代あたりの個体数
+   * @param size １世代あたりの個体数
    **/
   constructor(size) {
     this.size = size;
@@ -14,19 +13,9 @@ export default class Population {
 
   generatePopulation() {
     for (let i = 0; i < this.size; i++) {
-      let triangle = this.generateTriangle();
+      let triangle = this.constructor.generateTriangle();
       this.triangles.push(triangle);
     }
-  }
-
-  generateTriangle() {
-    let vertexes = Triangle.makeAllVertexes();
-    let triangle = new Triangle(vertexes);
-    triangle.setLength();
-    triangle.calcSumSides();
-    triangle.calcArea();
-    triangle.generateChromosome();
-    return triangle;
   }
 
   compareArea(triangle) {
@@ -70,18 +59,28 @@ export default class Population {
   }
 
   runCrossover() {
-    let cross_point = Math.floor(Math.random() * this.best_triangle.chromosome.length);
-    let child1_chromosome =
-      this.best_triangle.chromosome.substring(0, cross_point) +
-      this.second_triangle.chromosome.substring(cross_point);
-    let child2_chromosome =
-      this.second_triangle.chromosome.substring(0, cross_point) +
-      this.best_triangle.chromosome.substring(cross_point);
-    console.log('cross_point:', cross_point);
-    console.log('this.best_triangle.chromosome:', this.best_triangle.chromosome);
-    console.log('this.second_triangle.chromosome:', this.second_triangle.chromosome);
-    console.log('child1_chromosome:', child1_chromosome);
-    console.log('child2_chromosome:', child2_chromosome);
+    let children = [];
+    for (let i = 0; i < this.size; i++) {
+      let cross_point = Math.floor(Math.random() * this.best_triangle.chromosome.length);
+      let child1_chromosome =
+        this.best_triangle.chromosome.substring(0, cross_point) +
+        this.second_triangle.chromosome.substring(cross_point);
+      let child2_chromosome =
+        this.second_triangle.chromosome.substring(0, cross_point) +
+        this.best_triangle.chromosome.substring(cross_point);
+      children.push(child1_chromosome, child2_chromosome);
+    }
+    return children;
+  }
+
+  static generateTriangle() {
+    let vertexes = Triangle.makeAllVertexes();
+    let triangle = new Triangle(vertexes);
+    triangle.setLength();
+    triangle.calcSumSides();
+    triangle.calcArea();
+    triangle.generateChromosome();
+    return triangle;
   }
 
 }

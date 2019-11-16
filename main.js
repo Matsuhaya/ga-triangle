@@ -1,4 +1,4 @@
-import Population from './Population.js';
+import Generation from './Generation.js';
 
 // キャンバスを白に塗りつぶす
 const resetCanvas = () => {
@@ -92,18 +92,14 @@ const outputTriangle = (triangle) => {
 }
 
 const start = () => {
-  // let generation_size = $('#input_generation_size').val();
-  let population_size = $('#input_population_size').val();
-  let population = new Population(population_size);
-  population.generatePopulation();
-
-  population.runTournament($('#input_tournament_size').val());
-  population.runCrossover();
+  let generation_size = $('#input_generation_size').val();
+  let generation = new Generation(generation_size);
+  generation.updateGeneration();
 
   // 三角形の描画
-  let best_triangle = population.best_triangle;
-  let second_triangle = population.second_triangle;
-  console.log('population.triangles:', population.triangles);
+  let best_triangle = generation.latest_population.best_triangle;
+  let second_triangle = generation.latest_population.second_triangle;
+  console.log('enerate.latest_population.triangles:', generation.latest_population.triangles);
   console.log('best_triangle:', best_triangle);
   console.log('second_triangle:', second_triangle);
   drawTriangle(best_triangle);
