@@ -97,7 +97,8 @@ const start = () => {
   let population = new Population(population_size);
   population.generatePopulation();
 
-  population.doTournament($('#input_tournament_size').val());
+  population.runTournament($('#input_tournament_size').val());
+  population.runCrossover();
 
   // 三角形の描画
   let best_triangle = population.best_triangle;
