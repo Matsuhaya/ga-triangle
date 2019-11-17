@@ -16,9 +16,10 @@ export default class Generation {
         this.generate1stPopulation();
         // console.log('this.latest_population:', this.latest_population);
       } else {
-        console.log('this.latest_population:', this.latest_population);
+        // console.log('this.latest_population:', this.latest_population);
         this.regeneratePopulation();
         this.children = [];
+        console.log('this.latest_population.best_triangle:', this.latest_population.best_triangle);
       }
     }
   }
@@ -26,16 +27,21 @@ export default class Generation {
   generate1stPopulation() {
     let population_size = $('#input_population_size').val();
     let population = new Population(population_size);
-    population.generatePopulation();
+    population.unionTriangles();
     population.runTournament($('#input_tournament_size').val());
-    console.log('population:', population);
+    // console.log('population:', population);
     this.latest_population = population;
   }
 
   regeneratePopulation() {
     this.children.push(...this.latest_population.selectElite());
     this.children.push(...this.latest_population.runCrossover());
-    console.log('this.children:', this.children);
 
+    let population_size = $('#input_population_size').val();
+    let population = new Population(population_size);
+    population.reunionTriangles(this.children);
+    population.runTournament($('#input_tournament_size').val());
+    // console.log('population:', population);
+    this.latest_population = population;
   }
 }

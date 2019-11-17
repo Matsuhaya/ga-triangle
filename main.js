@@ -99,7 +99,7 @@ const start = () => {
   // 三角形の描画
   let best_triangle = generation.latest_population.best_triangle;
   let second_triangle = generation.latest_population.second_triangle;
-  console.log('enerate.latest_population.triangles:', generation.latest_population.triangles);
+  // console.log('generate.latest_population.triangles:', generation.latest_population.triangles);
   console.log('best_triangle:', best_triangle);
   console.log('second_triangle:', second_triangle);
   drawTriangle(best_triangle);

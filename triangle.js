@@ -82,7 +82,6 @@ export default class Triangle {
       this.constructor.paddingZero(
         this.constructor.convertBinary(this.vertexes.C.y3)
       );
-    console.log(this.chromosome.length);
   }
 
   // 三角形の頂点の位置を決める
@@ -109,9 +108,29 @@ export default class Triangle {
     return num.toString(2);
   }
 
+  static convert10digit(str) {
+    return parseInt(str, 2);
+  }
+
   // ゼロ埋めで10桁にする
   static paddingZero = (num) => {
     return ("0000000000" + num).slice(-10);
   }
+
+  // chromosomeをvertexesに変換して返す
+  static convertAllVertexes(chromosome) {
+    let vertexes = [];
+    for (let i = 0; i < 3; i++) {
+      let a = 20 * i;
+      let b = a + 10;
+      let c = b + 10;
+
+      let x = this.convert10digit(chromosome.slice(a, b));
+      let y = this.convert10digit(chromosome.slice(b, c));
+      vertexes.push([x, y]);
+    }
+    return vertexes;
+  }
+
 
 }

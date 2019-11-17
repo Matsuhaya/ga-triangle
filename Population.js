@@ -12,7 +12,7 @@ export default class Population {
     this.elite_size = 2; // 適合度が高い親の2個を次世代に残す
   }
 
-  generatePopulation() {
+  unionTriangles() {
     for (let i = 0; i < this.size; i++) {
       let triangle = this.constructor.generateTriangle();
       this.triangles.push(triangle);
@@ -55,8 +55,7 @@ export default class Population {
         this.compareArea(targets[i]);
       }
     }
-
-    console.log('targets:', targets);
+    // console.log('targets:', targets);
   }
 
   // 適合度が高い親の2個を次世代に残す
@@ -83,8 +82,25 @@ export default class Population {
     return children;
   }
 
+  reunionTriangles(children) {
+    for (let i = 0; i < this.size; i++) {
+      let triangle = this.constructor.regenerateTriangle(children[i]);
+      this.triangles.push(triangle);
+    }
+  }
+
   static generateTriangle() {
     let vertexes = Triangle.makeAllVertexes();
+    let triangle = new Triangle(vertexes);
+    triangle.setLength();
+    triangle.calcSumSides();
+    triangle.calcArea();
+    triangle.generateChromosome();
+    return triangle;
+  }
+
+  static regenerateTriangle(chromosome) {
+    let vertexes = Triangle.convertAllVertexes(chromosome);
     let triangle = new Triangle(vertexes);
     triangle.setLength();
     triangle.calcSumSides();
