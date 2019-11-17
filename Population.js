@@ -66,7 +66,8 @@ export default class Population {
 
   runCrossover() {
     let children = [];
-    for (let i = 0; i < (this.size - this.elite_size) / 2; i++) {
+    let chromosome_size = Math.ceil((this.size - this.elite_size) / 2);
+    for (let i = 0; i < chromosome_size; i++) {
       let cross_point = Math.floor(Math.random() * this.best_triangle.chromosome.length);
       let child1_chromosome =
         this.best_triangle.chromosome.substring(0, cross_point) +
@@ -75,6 +76,9 @@ export default class Population {
         this.second_triangle.chromosome.substring(0, cross_point) +
         this.best_triangle.chromosome.substring(cross_point);
       children.push(child1_chromosome, child2_chromosome);
+    }
+    if (this.size % 2 != 0) {
+      children.pop();
     }
     return children;
   }
@@ -88,5 +92,4 @@ export default class Population {
     triangle.generateChromosome();
     return triangle;
   }
-
 }
