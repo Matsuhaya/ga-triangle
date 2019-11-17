@@ -9,6 +9,7 @@ export default class Population {
     this.triangles = [];
     this.best_triangle;
     this.second_triangle;
+    this.elite_size = 2; // 適合度が高い親の2個を次世代に残す
   }
 
   generatePopulation() {
@@ -58,9 +59,14 @@ export default class Population {
     console.log('targets:', targets);
   }
 
+  // 適合度が高い親の2個を次世代に残す
+  selectElite() {
+    return [this.best_triangle.chromosome, this.second_triangle.chromosome];
+  }
+
   runCrossover() {
     let children = [];
-    for (let i = 0; i < this.size; i++) {
+    for (let i = 0; i < (this.size - this.elite_size) / 2; i++) {
       let cross_point = Math.floor(Math.random() * this.best_triangle.chromosome.length);
       let child1_chromosome =
         this.best_triangle.chromosome.substring(0, cross_point) +

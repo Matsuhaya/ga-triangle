@@ -17,7 +17,7 @@ export default class Generation {
         // console.log('this.latest_population:', this.latest_population);
       } else {
         console.log('this.latest_population:', this.latest_population);
-        this.generateAfterPopulation();
+        this.regeneratePopulation();
         this.children = [];
       }
     }
@@ -32,8 +32,10 @@ export default class Generation {
     this.latest_population = population;
   }
 
-  generateAfterPopulation() {
+  regeneratePopulation() {
+    this.children.push(...this.latest_population.selectElite());
     this.children.push(...this.latest_population.runCrossover());
     console.log('this.children:', this.children);
+
   }
 }
