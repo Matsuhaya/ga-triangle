@@ -12,9 +12,11 @@ export default class Population {
     this.elite_size = 2; // 適合度が高い親の2個を次世代に残す
   }
 
+  // 第一世代生成のために実行
   unionTriangles() {
     for (let i = 0; i < this.size; i++) {
-      let triangle = this.constructor.generateTriangle();
+      let vertexes = this.constructor.getAllVertexes();
+      let triangle = this.constructor.generateTriangle(vertexes);
       this.triangles.push(triangle);
     }
   }
@@ -82,15 +84,24 @@ export default class Population {
     return children;
   }
 
+  // 第二世代以降生成のために実行
   reunionTriangles(children) {
     for (let i = 0; i < this.size; i++) {
-      let triangle = this.constructor.regenerateTriangle(children[i]);
+      let vertexes = this.constructor.getConvertedAllVertexes(children[i]);
+      let triangle = this.constructor.generateTriangle(vertexes);
       this.triangles.push(triangle);
     }
   }
 
-  static generateTriangle() {
-    let vertexes = Triangle.makeAllVertexes();
+  static getAllVertexes() {
+    return Triangle.makeAllVertexes();
+  }
+
+  static getConvertedAllVertexes(chromosome) {
+    return Triangle.convertAllVertexes(chromosome);
+  }
+
+  static generateTriangle(vertexes) {
     let triangle = new Triangle(vertexes);
     triangle.setLength();
     triangle.calcSumSides();
@@ -100,14 +111,4 @@ export default class Population {
     return triangle;
   }
 
-  static regenerateTriangle(chromosome) {
-    let vertexes = Triangle.convertAllVertexes(chromosome);
-    let triangle = new Triangle(vertexes);
-    triangle.setLength();
-    triangle.calcSumSides();
-    triangle.calcArea();
-    triangle.generateChromosome();
-    triangle.calcFitness();
-    return triangle;
-  }
 }
