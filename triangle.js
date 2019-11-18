@@ -117,6 +117,11 @@ export default class Triangle {
     return parseInt(str, 2);
   }
 
+  // 2進数→10進数の変換で、Canvasサイズをオーバーしないための座標変換
+  static convertVertexe(position) {
+    return position / 1023 * WIDTH;
+  }
+
   // ゼロ埋めで10桁にする
   static paddingZero = (num) => {
     return ("0000000000" + num).slice(-10);
@@ -130,8 +135,8 @@ export default class Triangle {
       let b = a + 10;
       let c = b + 10;
 
-      let x = this.convert10digit(chromosome.slice(a, b));
-      let y = this.convert10digit(chromosome.slice(b, c));
+      let x = this.convertVertexe(this.convert10digit(chromosome.slice(a, b)));
+      let y = this.convertVertexe(this.convert10digit(chromosome.slice(b, c)));
       vertexes.push([x, y]);
     }
     return vertexes;
