@@ -84,6 +84,32 @@ export default class Population {
     return children;
   }
 
+  // 突然変異率3%,さらにひとつの遺伝子に対する突然変異率3%
+  // console.logで動作確認済み
+  runMutation(children) {
+    if (Math.random() * 100 < 3) {
+      console.log('runMutation')
+      // console.log('children:', children);
+      for (let i = 0; i < this.size; i++) {
+        for (let j = 0; j < children[i].length; j++) {
+          let rand = Math.random() * 100;
+          if (rand < 3) {
+            console.log('!!!!!!!!Mutation!!!!!!!!')
+            // console.log('i,j:', i, j);
+            if (children[i].substr(j, 1) == 0) {
+              children[i] = this.constructor.strIns(children[i], j, '1');
+              children[i] = this.constructor.strDel(children[i], j + 1);
+            } else {
+              children[i] = this.constructor.strIns(children[i], j, '0');
+              children[i] = this.constructor.strDel(children[i], j + 1);
+            }
+          }
+        }
+      }
+      // console.log('children:', children);
+    }
+  }
+
   // 第二世代以降生成のために実行
   reunionTriangles(children) {
     for (let i = 0; i < this.size; i++) {
@@ -111,4 +137,13 @@ export default class Population {
     return triangle;
   }
 
-}
+  static strIns(str, idx, val) {
+    let res = str.slice(0, idx) + val + str.slice(idx);
+    return res;
+  }
+
+  static strDel(str, idx) {
+    var res = str.slice(0, idx) + str.slice(idx + 1);
+    return res;
+  };
+};
