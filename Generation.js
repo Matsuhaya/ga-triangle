@@ -8,19 +8,20 @@ export default class Generation {
     this.size = size;
     this.latest_population;
     this.children = []; //次世代population生成用のchromosome
+    this.fitnessPoints = [{}]; // CanvasJSでx=0を空にするため、{}を定義しておく
   }
 
   updateGeneration() {
     for (let i = 0; i < this.size; i++) {
       if (i === 0) {
         this.generate1stPopulation();
-        // console.log('this.latest_population:', this.latest_population);
       } else {
-        // console.log('this.latest_population:', this.latest_population);
         this.regeneratePopulation();
         this.children = [];
-        console.log('this.latest_population.best_triangle:', this.latest_population.best_triangle);
       }
+      console.count('updateGeneration');
+      console.log('this.latest_population:', this.latest_population);
+      this.addFitnessPoint();
     }
   }
 
@@ -29,7 +30,6 @@ export default class Generation {
     let population = new Population(population_size);
     population.unionTriangles();
     population.runTournament($('#input_tournament_size').val());
-    // console.log('population:', population);
     this.latest_population = population;
   }
 
@@ -41,7 +41,10 @@ export default class Generation {
     let population = new Population(population_size);
     population.reunionTriangles(this.children);
     population.runTournament($('#input_tournament_size').val());
-    // console.log('population:', population);
     this.latest_population = population;
+  }
+
+  addFitnessPoint() {
+    this.fitnessPoints.push({ y: this.latest_population.best_triangle.fitness })
   }
 }

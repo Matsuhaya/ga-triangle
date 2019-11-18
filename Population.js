@@ -23,7 +23,7 @@ export default class Population {
 
   compareFitness(triangle) {
     if (triangle.fitness > this.best_triangle.fitness) {
-      this.updateSecondTriangle();
+      this.updateSecondTriangle(this.best_triangle);
       this.updateBestTriangle(triangle)
     }
   }
@@ -32,8 +32,8 @@ export default class Population {
     this.best_triangle = triangle;
   }
 
-  updateSecondTriangle() {
-    this.second_triangle = this.best_triangle;
+  updateSecondTriangle(triangle) {
+    this.second_triangle = triangle;
   }
 
   runTournament(size) {
@@ -51,7 +51,7 @@ export default class Population {
         if (targets[i].fitness > this.best_triangle.fitness) {
           this.compareFitness(targets[i]);
         } else {
-          this.updateSecondTriangle();
+          this.updateSecondTriangle(targets[i]);
         }
       } else {
         this.compareFitness(targets[i]);

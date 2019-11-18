@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -15,6 +14,8 @@
     <div class="canvas_wrapper center">
       <canvas id="canvas1" class="canvas"></canvas>
     </div>
+    <h5 style="text-align: center" id="chartTitle"></h5>
+    <div id="chartContainer" style="height: 500px; width:1000px; margin: auto;"></div>
     <div class="center top">
       <button id="generate" class="btn">生成</button>
     </div>
@@ -22,11 +23,11 @@
       <tbody>
         <tr>
           <td>世代数</td>
-          <td><input type="number" id="input_generation_size" value="5"></td>
+          <td><input type="number" id="input_generation_size" value="20"></td>
         </tr>
         <tr>
           <td>個体数</td>
-          <td><input type="number" id="input_population_size" value="10"></td>
+          <td><input type="number" id="input_population_size" value="100"></td>
         </tr>
         <tr>
           <td>選択方式</td>
@@ -34,7 +35,7 @@
         </tr>
         <tr>
           <td>トーナメントサイズ(t≥2)</td>
-          <td><input type="number" id="input_tournament_size" value="10"></td>
+          <td><input type="number" id="input_tournament_size" value="100"></td>
         </tr>
       </tbody>
     </table>
@@ -78,7 +79,8 @@
     <hr class="line">
   </div>
 </body>
-
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
 <script src="env-vriable.js"></script>
 <script src="main.js" type="module"></script>
 

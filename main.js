@@ -95,21 +95,42 @@ const start = () => {
   let generation_size = $('#input_generation_size').val();
   let generation = new Generation(generation_size);
   generation.updateGeneration();
+  dataPoints = generation.fitnessPoints;
 
   // 三角形の描画
   let best_triangle = generation.latest_population.best_triangle;
-  let second_triangle = generation.latest_population.second_triangle;
-  // console.log('generate.latest_population.triangles:', generation.latest_population.triangles);
-  console.log('best_triangle:', best_triangle);
-  console.log('second_triangle:', second_triangle);
   drawTriangle(best_triangle);
   outputTriangle(best_triangle);
 }
+
+const chartContainer = document.querySelector('#chartContainer');
 
 $('#generate').click(() => {
   resetCanvas();
   drawGrid();
   start();
+
+  if (chartContainer) {
+    let chart = new CanvasJS.Chart("chartContainer", {
+      animationEnabled: true,
+      theme: "light1",
+      title: {
+        text: "各世代の適応度最大値"
+      },
+      axisX: {
+        includeZero: false,
+        minimum: 1
+      },
+      axisY: {
+        includeZero: false
+      },
+      data: [{
+        type: "line",
+        dataPoints: dataPoints
+      }]
+    });
+    chart.render();
+  }
 }
 );
 
