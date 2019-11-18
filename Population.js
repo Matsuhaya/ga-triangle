@@ -19,8 +19,8 @@ export default class Population {
     }
   }
 
-  compareArea(triangle) {
-    if (triangle.area > this.best_triangle.area) {
+  compareFitness(triangle) {
+    if (triangle.fitness > this.best_triangle.fitness) {
       this.updateSecondTriangle();
       this.updateBestTriangle(triangle)
     }
@@ -46,13 +46,13 @@ export default class Population {
       if (i === 0) {
         this.updateBestTriangle(targets[0]);
       } else if (i === 1) {
-        if (targets[i].area > this.best_triangle.area) {
-          this.compareArea(targets[i]);
+        if (targets[i].fitness > this.best_triangle.fitness) {
+          this.compareFitness(targets[i]);
         } else {
           this.updateSecondTriangle();
         }
       } else {
-        this.compareArea(targets[i]);
+        this.compareFitness(targets[i]);
       }
     }
     // console.log('targets:', targets);
@@ -96,6 +96,7 @@ export default class Population {
     triangle.calcSumSides();
     triangle.calcArea();
     triangle.generateChromosome();
+    triangle.calcFitness();
     return triangle;
   }
 
@@ -106,6 +107,7 @@ export default class Population {
     triangle.calcSumSides();
     triangle.calcArea();
     triangle.generateChromosome();
+    triangle.calcFitness();
     return triangle;
   }
 }

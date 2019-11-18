@@ -22,6 +22,7 @@ export default class Triangle {
     this.sum_sides;
     this.area;
     this.chromosome;
+    this.fitness;
   }
 
   // ３辺の長さを計算してプロパティに定義する
@@ -84,6 +85,10 @@ export default class Triangle {
       );
   }
 
+  calcFitness() {
+    this.fitness = this.area;
+  }
+
   // 三角形の頂点の位置を決める
   static makeAllVertexes() {
     let vertexes = [];
@@ -131,6 +136,5 @@ export default class Triangle {
     }
     return vertexes;
   }
-
 
 }
