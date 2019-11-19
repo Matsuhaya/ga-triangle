@@ -36,7 +36,11 @@ export default class Generation {
   regeneratePopulation() {
     this.children.push(...this.latest_population.selectElite());
     this.children.push(...this.latest_population.runCrossover());
-    this.latest_population.runMutation(this.children);
+
+    if ($("[name=mutation]").prop("checked")) {
+      console.log('mutation ON')
+      this.latest_population.runMutation(this.children);
+    }
 
     let population_size = $('#input_population_size').val();
     let population = new Population(population_size);
