@@ -125,6 +125,49 @@ const drawChart = () => {
   }
 }
 
+// rangeslider用
+$(function () {
+  const $document = $(document);
+  const $inputRange = $('input[type="range"]');
+  $inputRange.rangeslider({
+
+    // Feature detection the default is `true`.
+    // Set this to `false` if you want to use
+    // the polyfill also in Browsers which support
+    // the native <input type="range"> element.
+    polyfill: false,
+
+    // Default CSS classes
+    rangeClass: 'rangeslider',
+    disabledClass: 'rangeslider--disabled',
+    horizontalClass: 'rangeslider--horizontal',
+    verticalClass: 'rangeslider--vertical',
+    fillClass: 'rangeslider__fill',
+    handleClass: 'rangeslider__handle',
+
+    // Callback function
+    onInit: function () { },
+
+    // Callback function
+    onSlide: function (position, value) { },
+
+    // Callback function
+    onSlideEnd: function (position, value) { }
+  });
+
+  const valueOutput = (element) => {
+    var value = element.value,
+      output = element.parentNode.getElementsByTagName('output')[0];
+    output.innerHTML = value;
+  }
+  for (var i = $inputRange.length - 1; i >= 0; i--) {
+    valueOutput($inputRange[i]);
+  };
+  $document.on('input', 'input[type="range"]', function (e) {
+    valueOutput(e.target);
+  });
+});
+
 $('#generate').click(() => {
   resetCanvas();
   drawGrid();

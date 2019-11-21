@@ -7,9 +7,13 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="rangeslider.css">
 </head>
 
 <body>
+  <div class="main-title">
+    <h1>遺伝的アルゴリズム(GA)シミュレーター</h1>
+  </div>
   <div class="top-controls">
     <div class="control">
       <div class="input">
@@ -18,13 +22,21 @@
     </div>
     <div class="control">
       <label>世代数</label>
-      <div class="input"><input type="number" id="input_generation_size" value="100"></div>
+      <div class="wrapper">
+        <output></output>
+        <input id="input_generation_size" type="range" min="1" max="500" step="1" value="100" data-rangeslider>
+      </div>
+      <!-- <div class="input"><input type="number" id="input_generation_size" value="100"></div> -->
     </div>
     <div class="control">
       <label>個体数</label>
-      <div class="input">
-        <input type="number" id="input_population_size" value="100">
+      <div class="wrapper">
+        <output></output>
+        <input id="input_population_size" type="range" min="1" max="500" step="1" value="100" data-rangeslider>
       </div>
+      <!-- <div class="input">
+        <input type="number" id="input_population_size" value="100">
+      </div> -->
     </div>
     <div class="control">
       <label>選択方式</label>
@@ -34,15 +46,19 @@
     </div>
     <div class="control">
       <label>トーナメントサイズ(t≥2)</label>
-      <div class="input">
-        <input type="number" id="input_tournament_size" value="50">
+      <div class="wrapper">
+        <output></output>
+        <input id="input_tournament_size" type="range" min="1" max="500" step="1" value="50" data-rangeslider>
       </div>
+      <!-- <div class="input">
+        <input type="number" id="input_tournament_size" value="50">
+      </div> -->
     </div>
     <div class="control">
       <label>突然変異</label>
       <div class="input">
         <div class="switchArea">
-          <input name="mutation" type="checkbox" id="switch1">
+          <input name="mutation" type="checkbox" id="switch1" checked="checked">
           <label for="switch1"><span></span></label>
           <div id="swImg"></div>
         </div>
@@ -105,5 +121,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
 <script src="env-vriable.js"></script>
 <script src="main.js" type="module"></script>
+<script src="rangeslider.min.js"></script>
 
 </html>
