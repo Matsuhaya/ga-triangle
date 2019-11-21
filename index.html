@@ -10,77 +10,95 @@
 </head>
 
 <body>
+  <div class="top-controls">
+    <div class="control">
+      <div class="input">
+        <input type="button" id="generate" class="btn control-btn">
+      </div>
+    </div>
+    <div class="control">
+      <label>世代数</label>
+      <div class="input"><input type="number" id="input_generation_size" value="100"></div>
+    </div>
+    <div class="control">
+      <label>個体数</label>
+      <div class="input">
+        <input type="number" id="input_population_size" value="100">
+      </div>
+    </div>
+    <div class="control">
+      <label>選択方式</label>
+      <div class="input">
+        <p>トーナメント方式</p>
+      </div>
+    </div>
+    <div class="control">
+      <label>トーナメントサイズ(t≥2)</label>
+      <div class="input">
+        <input type="number" id="input_tournament_size" value="50">
+      </div>
+    </div>
+    <div class="control">
+      <label>突然変異</label>
+      <div class="input">
+        <div class="switchArea">
+          <input name="mutation" type="checkbox" id="switch1">
+          <label for="switch1"><span></span></label>
+          <div id="swImg"></div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="container">
-    <div class="canvas_wrapper center">
+    <div class="canvas_wrapper">
+      <h1>Canvas</h1>
       <canvas id="canvas1" class="canvas"></canvas>
     </div>
-    <h5 style="text-align: center" id="chartTitle"></h5>
-    <div id="chartContainer" style="height: 500px; width:1000px; margin: auto;"></div>
-    <div class="center top">
-      <button id="generate" class="btn">生成</button>
+    <div class="output">
+      <h1>出力結果</h1>
+      <h5 class="txt-center">各世代の適応度最大値</h5>
+      <div id="chartContainer" style="height: 500px; width:800px; margin: auto;"></div>
+      <br>
+      <br>
+      <div class="information">
+        <h5 class="txt-center">最も適応度の高い三角形の情報</h5>
+        <table border="1" class="table center">
+          <tr>
+            <td>点Aの座標</td>
+            <td id="vertex_A"></td>
+          </tr>
+          <tr>
+            <td>点Bの座標</td>
+            <td id="vertex_B"></td>
+          </tr>
+          <tr>
+            <td>点Cの座標</td>
+            <td id="vertex_C"></td>
+          </tr>
+          <tr>
+            <td>辺aの長さ</td>
+            <td id="side_a"></td>
+          </tr>
+          <tr>
+            <td>辺bの長さ</td>
+            <td id="side_b"></td>
+          </tr>
+          <tr>
+            <td>辺cの長さ</td>
+            <td id="side_c"></td>
+          </tr>
+          <tr>
+            <td>3辺の和</td>
+            <td id="sum_sides"></td>
+          </tr>
+          <tr>
+            <td>面積</td>
+            <td id="area"></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <table border="1" class="table center top">
-      <tbody>
-        <tr>
-          <td>世代数</td>
-          <td><input type="number" id="input_generation_size" value="100"></td>
-        </tr>
-        <tr>
-          <td>個体数</td>
-          <td><input type="number" id="input_population_size" value="100"></td>
-        </tr>
-        <tr>
-          <td>選択方式</td>
-          <td>トーナメント方式</td>
-        </tr>
-        <tr>
-          <td>トーナメントサイズ(t≥2)</td>
-          <td><input type="number" id="input_tournament_size" value="50"></td>
-        </tr>
-        <tr>
-          <td>突然変異</td>
-          <td><input type="checkbox" name="mutation" id="input_mutation" class="td-check" checked="checked"></td>
-        </tr>
-      </tbody>
-    </table>
-    <hr class="line">
-    <p class="txt-center">三角形の情報</p>
-    <table border="1" class="table center">
-      <tr>
-        <td>点Aの座標</td>
-        <td id="vertex_A"></td>
-      </tr>
-      <tr>
-        <td>点Bの座標</td>
-        <td id="vertex_B"></td>
-      </tr>
-      <tr>
-        <td>点Cの座標</td>
-        <td id="vertex_C"></td>
-      </tr>
-      <tr>
-        <td>辺aの長さ</td>
-        <td id="side_a"></td>
-      </tr>
-      <tr>
-        <td>辺bの長さ</td>
-        <td id="side_b"></td>
-      </tr>
-      <tr>
-        <td>辺cの長さ</td>
-        <td id="side_c"></td>
-      </tr>
-      <tr>
-        <td>3辺の和</td>
-        <td id="sum_sides"></td>
-      </tr>
-      <tr>
-        <td>面積</td>
-        <td id="area"></td>
-      </tr>
-      </tbody>
-    </table>
-    <hr class="line">
   </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

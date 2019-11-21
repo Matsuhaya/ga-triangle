@@ -104,19 +104,11 @@ const start = () => {
 }
 
 const chartContainer = document.querySelector('#chartContainer');
-
-$('#generate').click(() => {
-  resetCanvas();
-  drawGrid();
-  start();
-
+const drawChart = () => {
   if (chartContainer) {
     let chart = new CanvasJS.Chart("chartContainer", {
       animationEnabled: true,
       theme: "light1",
-      title: {
-        text: "各世代の適応度最大値"
-      },
       axisX: {
         includeZero: false,
         minimum: 1
@@ -132,11 +124,19 @@ $('#generate').click(() => {
     chart.render();
   }
 }
+
+$('#generate').click(() => {
+  resetCanvas();
+  drawGrid();
+  start();
+  drawChart();
+}
 );
 
 const init = () => {
   window.onload = () => {
     drawGrid();
+    drawChart();
   }
 }
 

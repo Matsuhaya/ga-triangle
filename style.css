@@ -1,5 +1,13 @@
+.top-controls{
+  padding:4rem 0;
+  display: flex;
+  justify-content: center;
+}
+
 .container{
   margin-top: 4rem;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .table {
@@ -15,11 +23,6 @@
   border: 0;
   padding: 0;
   text-align: center;
-}
-
-.line {
-  border-top: 1px solid #8c8b8b;
-  width: 60%;
 }
 
 .center {
@@ -44,4 +47,86 @@
   bottom:0;
   left:0;
   margin:auto;
+}
+
+.control + .control{
+  margin-left: 100px;
+}
+
+.input p{
+  margin-top: 0.5rem;
+  padding: 0;
+}
+
+.control-btn{
+  border: 0px;
+  width:100px;
+  height:100px;
+  object-fit:cover;
+  background: url(../img/play.png) left top no-repeat;
+  background-position: 50%;
+  outline: none;
+}
+
+.switchArea {
+  line-height    : 60px;                /* 1行の高さ          */
+  letter-spacing : 0;                   /* 文字間             */
+  text-align     : center;              /* 文字位置は中央     */
+  font-size      : 27px;                /* 文字サイズ         */
+
+  position       : relative;            /* 親要素が基点       */
+  margin         : auto;                /* 中央寄せ           */
+  width          : 150px;               /* ボタンの横幅       */
+  background     : #fff;                /* デフォルト背景色   */
+}
+
+ /* === チェックボックス ==================================== */
+.switchArea input[type="checkbox"] {
+  display        : none;            /* チェックボックス非表示 */
+}
+
+ /* === チェックボックスのラベル（標準） ==================== */
+.switchArea label {
+  display        : block;               /* ボックス要素に変更 */
+  box-sizing     : border-box;          /* 枠線を含んだサイズ */
+  height         : 60px;                /* ボタンの高さ       */
+  border         : 2px solid #000000;   /* 未選択タブのの枠線 */
+  border-radius  : 30px;                /* 角丸               */
+}
+
+ /* === チェックボックスのラベル（ONのとき） ================ */
+.switchArea input[type="checkbox"]:checked +label {
+  border-color   : #1a1aff;             /* 選択タブの枠線     */
+}
+
+ /* === 表示する文字（標準） ================================ */
+.switchArea label span:after{
+  content        : "OFF";               /* 表示する文字       */
+  padding        : 0 0 0 36px;          /* 表示する位置       */
+  color          : #000000;             /* 文字色             */
+}
+
+ /* === 表示する文字（ONのとき） ============================ */
+.switchArea  input[type="checkbox"]:checked + label span:after{
+  content        : "ON";                /* 表示する文字       */
+  padding        : 0 36px 0 0;          /* 表示する位置       */
+  color          : #1a1aff;             /* 文字色             */
+}
+
+ /* === 丸部分のSTYLE（標準） =============================== */
+.switchArea #swImg {
+  position       : absolute;            /* 親要素からの相対位置*/
+  width          : 52px;                /* 丸の横幅           */
+  height         : 52px;                /* 丸の高さ           */
+  background     : #000000;             /* カーソルタブの背景 */
+  top            : 4px;                 /* 親要素からの位置   */
+  left           : 4px;                 /* 親要素からの位置   */
+  border-radius  : 26px;                /* 角丸               */
+  transition     : .2s;                 /* 滑らか変化         */
+}
+
+ /* === 丸部分のSTYLE（ONのとき） =========================== */
+.switchArea input[type="checkbox"]:checked ~ #swImg {
+  transform      : translateX(90px);    /* 丸も右へ移動       */
+  background     : #1a1aff;             /* カーソルタブの背景 */
 }
