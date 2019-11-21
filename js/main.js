@@ -110,10 +110,12 @@ const drawChart = () => {
       animationEnabled: true,
       theme: "light1",
       axisX: {
+        title: "世代数",
         includeZero: false,
         minimum: 1
       },
       axisY: {
+        title: "面積(px2)",
         includeZero: false
       },
       data: [{
