@@ -1,5 +1,42 @@
+.nav-link{
+  text-align: right;
+  background-color: darkslategray;
+}
+
+.octicon {
+  display: inline-block; /* 公式と同じ */
+  fill: currentColor;    /* 公式と同じ */
+  vertical-align: text-bottom;
+  height: 60px; /* 大きさは height で指定 */
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: white;
+}
+
+/*div要素全体にリンクをつけるために必要な要素*/
+.linkbox {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin: 0 0 0 auto;
+    z-index: 1;
+}
+.linkbox a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height:100%;
+    width: 100%;
+}
+
+.linkbox a:hover{/* マウスオーバー時に色変更*/
+    opacity: 0.1;
+    background-color: #000000;
+}
+
 .main-title{
-  height: 300px;
+  height: 240px;
   text-align: center;
   background-color: darkslategray;
   color: white;
@@ -7,7 +44,8 @@
 }
 
 .main-title > h1{
-  line-height: 300px;
+  margin: 0;
+  line-height: 150px;
 }
 
 .top-controls{
