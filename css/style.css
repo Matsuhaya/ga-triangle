@@ -7,7 +7,7 @@
   display: inline-block; /* 公式と同じ */
   fill: currentColor; /* 公式と同じ */
   vertical-align: text-bottom;
-  height: 60px; /* 大きさは height で指定 */
+  height: 30px; /* 大きさは height で指定 */
   position: absolute;
   top: 20px;
   right: 20px;
@@ -17,8 +17,8 @@
 /*div要素全体にリンクをつけるために必要な要素*/
 .linkbox {
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   margin: 0 0 0 auto;
   z-index: 1;
 }
@@ -37,7 +37,7 @@
 }
 
 .main-title {
-  height: 240px;
+  height: 100px;
   text-align: center;
   background-color: darkslategray;
   color: white;
@@ -46,7 +46,7 @@
 
 .main-title > h1 {
   margin: 0;
-  line-height: 150px;
+  line-height: 40px;
 }
 
 .top-controls {
@@ -63,12 +63,12 @@
 }
 
 .table {
-  width: 600px;
+  width: 500px;
   background-color: white;
 }
 
 .table td {
-  width: 300px;
+  width: 250px;
 }
 
 .table input {
@@ -103,7 +103,7 @@
 }
 
 .control + .control {
-  margin-left: 100px;
+  margin-left: 40px;
 }
 
 .input p {
