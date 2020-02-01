@@ -1,5 +1,9 @@
 # 遺伝的アルゴリズム(GA)シミュレータ
 
+## Link
+
+http://grayhorse5.sakura.ne.jp/ga-triangle/index.html
+
 ## Description
 
 本アプリは、GA を体感できるシンプルなシミュレータである。
@@ -14,9 +18,7 @@
 
 キャンバスの大きさは幅 500px、高さ 500px としたため、最大面積は下記の通り 125000px となるはずである。
 
-$$
-500 \times 500 \div 2 = 125000
-$$
+![](https://i.imgur.com/tJUmVR7.png)
 
 シミュレータでは、パラメータを調整しながら交差や突然変異などの操作を実施することで、各操作が解の探索にどのような影響を及ぼすのかを体感することを目的としている。
 
@@ -60,7 +62,7 @@ $$
 
 <br>
 
-1. 世代数、個体数共に極端に低く設定した場合　　![](https://i.imgur.com/Hh89fta.png)<br><br>
+1. 世代数、個体数共に極端に低く設定した場合　　![](https://i.imgur.com/Hh89fta.png)　<br><br>
 2. 世代数、個体数共に中程度に設定し、突然変異を含まない場合　　![](https://i.imgur.com/G9vcNnN.png)<br><br>
 3. 世代数、個体数共に中程度に設定し、突然変異を含む場合　　![](https://i.imgur.com/zPHmNXT.png)<br><br>
 4. 世代数、個体数共に高めに設定し、突然変異を含む場合　　![](https://i.imgur.com/avqGXUe.png)<br><br>
