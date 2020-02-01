@@ -28,16 +28,16 @@ export default class Triangle {
   // ３辺の長さを計算してプロパティに定義する
   setLength() {
     this.sides.a = Math.sqrt(
-      Math.pow((this.vertexes.B.x2 - this.vertexes.C.x3), 2) +
-      Math.pow((this.vertexes.B.y2 - this.vertexes.C.y3), 2)
+      Math.pow(this.vertexes.B.x2 - this.vertexes.C.x3, 2) +
+        Math.pow(this.vertexes.B.y2 - this.vertexes.C.y3, 2)
     );
     this.sides.b = Math.sqrt(
-      Math.pow((this.vertexes.C.x3 - this.vertexes.A.x1), 2) +
-      Math.pow((this.vertexes.C.y3 - this.vertexes.A.y1), 2)
+      Math.pow(this.vertexes.C.x3 - this.vertexes.A.x1, 2) +
+        Math.pow(this.vertexes.C.y3 - this.vertexes.A.y1, 2)
     );
     this.sides.c = Math.sqrt(
-      Math.pow((this.vertexes.A.x1 - this.vertexes.B.x2), 2) +
-      Math.pow((this.vertexes.A.y1 - this.vertexes.B.y2), 2)
+      Math.pow(this.vertexes.A.x1 - this.vertexes.B.x2, 2) +
+        Math.pow(this.vertexes.A.y1 - this.vertexes.B.y2, 2)
     );
   }
 
@@ -66,22 +66,34 @@ export default class Triangle {
   generateChromosome() {
     this.chromosome =
       this.constructor.paddingZero(
-        this.constructor.convertBinary(this.constructor.convertChromosome(this.vertexes.A.x1))
+        this.constructor.convertBinary(
+          this.constructor.convertChromosome(this.vertexes.A.x1)
+        )
       ) +
       this.constructor.paddingZero(
-        this.constructor.convertBinary(this.constructor.convertChromosome(this.vertexes.A.y1))
+        this.constructor.convertBinary(
+          this.constructor.convertChromosome(this.vertexes.A.y1)
+        )
       ) +
       this.constructor.paddingZero(
-        this.constructor.convertBinary(this.constructor.convertChromosome(this.vertexes.B.x2))
+        this.constructor.convertBinary(
+          this.constructor.convertChromosome(this.vertexes.B.x2)
+        )
       ) +
       this.constructor.paddingZero(
-        this.constructor.convertBinary(this.constructor.convertChromosome(this.vertexes.B.y2))
+        this.constructor.convertBinary(
+          this.constructor.convertChromosome(this.vertexes.B.y2)
+        )
       ) +
       this.constructor.paddingZero(
-        this.constructor.convertBinary(this.constructor.convertChromosome(this.vertexes.C.x3))
+        this.constructor.convertBinary(
+          this.constructor.convertChromosome(this.vertexes.C.x3)
+        )
       ) +
       this.constructor.paddingZero(
-        this.constructor.convertBinary(this.constructor.convertChromosome(this.vertexes.C.y3))
+        this.constructor.convertBinary(
+          this.constructor.convertChromosome(this.vertexes.C.y3)
+        )
       );
   }
 
@@ -119,18 +131,18 @@ export default class Triangle {
 
   // 10進数→2進数の変換で、Canvasサイズに合わせた座標変換
   static convertChromosome(position) {
-    return Math.ceil(position / WIDTH * 1023);
+    return Math.ceil((position / WIDTH) * 1023);
   }
 
   // 2進数→10進数の変換で、Canvasサイズに合わせた座標変換
   static convertVertexe(chromosome) {
-    return Math.floor(chromosome / 1023 * WIDTH);
+    return Math.floor((chromosome / 1023) * WIDTH);
   }
 
   // ゼロ埋めで10桁にする
-  static paddingZero = (num) => {
-    return ("0000000000" + num).slice(-10);
-  }
+  static paddingZero = num => {
+    return ('0000000000' + num).slice(-10);
+  };
 
   // chromosomeをvertexesに変換して返す
   static convertAllVertexes(chromosome) {
@@ -146,5 +158,4 @@ export default class Triangle {
     }
     return vertexes;
   }
-
 }

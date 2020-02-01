@@ -37,8 +37,8 @@ export default class Generation {
     this.children.push(...this.latest_population.selectElite());
     this.children.push(...this.latest_population.runCrossover());
 
-    if ($("[name=mutation]").prop("checked")) {
-      console.log('mutation ON')
+    if ($('[name=mutation]').prop('checked')) {
+      console.log('mutation ON');
       this.latest_population.runMutation(this.children);
     }
 
@@ -50,6 +50,8 @@ export default class Generation {
   }
 
   addFitnessPoint() {
-    this.fitnessPoints.push({ y: this.latest_population.best_triangle.fitness })
+    this.fitnessPoints.push({
+      y: this.latest_population.best_triangle.fitness
+    });
   }
 }

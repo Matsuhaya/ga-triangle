@@ -1,136 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/rangeslider.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <link rel="stylesheet" href="./css/style.css">
-  <link rel="stylesheet" href="./css/rangeslider.css">
-</head>
-
-<body>
-  <div class="nav-link">
-    <div class="linkbox">
-      <a href="https://github.com/Matsuhaya/ga-triangle"></a>
-    </div>
-    <svg class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true">
-      <path fill-rule="evenodd"
-        d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
-      </path>
-    </svg>
-  </div>
-  <div class="main-title">
-    <h1>遺伝的アルゴリズム(GA)シミュレーター</h1>
-  </div>
-  <div class="top-controls">
-    <div class="control">
-      <div class="input">
-        <input type="button" id="generate" class="btn control-btn">
+  <body>
+    <div class="nav-link">
+      <div class="linkbox">
+        <a href="https://github.com/Matsuhaya/ga-triangle"></a>
       </div>
+      <svg
+        class="octicon octicon-mark-github"
+        viewBox="0 0 16 16"
+        version="1.1"
+        aria-hidden="true"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+        ></path>
+      </svg>
     </div>
-    <div class="control">
-      <label>世代数</label>
-      <div class="wrapper">
-        <output></output>
-        <input id="input_generation_size" type="range" min="1" max="500" step="1" value="100" data-rangeslider>
-      </div>
-      <!-- <div class="input"><input type="number" id="input_generation_size" value="100"></div> -->
+    <div class="main-title">
+      <h1>遺伝的アルゴリズム(GA)シミュレーター</h1>
     </div>
-    <div class="control">
-      <label>個体数</label>
-      <div class="wrapper">
-        <output></output>
-        <input id="input_population_size" type="range" min="2" max="500" step="1" value="100" data-rangeslider>
+    <div class="top-controls">
+      <div class="control">
+        <div class="input">
+          <input type="button" id="generate" class="btn control-btn" />
+        </div>
       </div>
-      <!-- <div class="input">
+      <div class="control">
+        <label>世代数</label>
+        <div class="wrapper">
+          <output></output>
+          <input
+            id="input_generation_size"
+            type="range"
+            min="1"
+            max="500"
+            step="1"
+            value="100"
+            data-rangeslider
+          />
+        </div>
+        <!-- <div class="input"><input type="number" id="input_generation_size" value="100"></div> -->
+      </div>
+      <div class="control">
+        <label>個体数</label>
+        <div class="wrapper">
+          <output></output>
+          <input
+            id="input_population_size"
+            type="range"
+            min="2"
+            max="500"
+            step="1"
+            value="100"
+            data-rangeslider
+          />
+        </div>
+        <!-- <div class="input">
         <input type="number" id="input_population_size" value="100">
       </div> -->
-    </div>
-    <div class="control">
-      <label>選択方式</label>
-      <div class="input">
-        <p>トーナメント方式</p>
       </div>
-    </div>
-    <div class="control">
-      <label>トーナメントサイズ</label>
-      <div class="wrapper">
-        <output></output>
-        <input id="input_tournament_size" type="range" min="2" max="500" step="1" value="50" data-rangeslider>
+      <div class="control">
+        <label>選択方式</label>
+        <div class="input">
+          <p>トーナメント方式</p>
+        </div>
       </div>
-      <!-- <div class="input">
+      <div class="control">
+        <label>トーナメントサイズ</label>
+        <div class="wrapper">
+          <output></output>
+          <input
+            id="input_tournament_size"
+            type="range"
+            min="2"
+            max="500"
+            step="1"
+            value="50"
+            data-rangeslider
+          />
+        </div>
+        <!-- <div class="input">
         <input type="number" id="input_tournament_size" value="50">
       </div> -->
-    </div>
-    <div class="control">
-      <label>突然変異</label>
-      <div class="input">
-        <div class="switchArea">
-          <input name="mutation" type="checkbox" id="switch1" checked="checked">
-          <label for="switch1"><span></span></label>
-          <div id="swImg"></div>
+      </div>
+      <div class="control">
+        <label>突然変異</label>
+        <div class="input">
+          <div class="switchArea">
+            <input
+              name="mutation"
+              type="checkbox"
+              id="switch1"
+              checked="checked"
+            />
+            <label for="switch1"><span></span></label>
+            <div id="swImg"></div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="container">
-    <div class="canvas_wrapper">
-      <h1>Canvas(1000px × 1000px)</h1>
-      <canvas id="canvas1" class="canvas"></canvas>
-    </div>
-    <div class="output">
-      <h1>出力結果</h1>
-      <h5 class="txt-center">各世代の適応度最大値</h5>
-      <div id="chartContainer" style="height: 500px; width:800px; margin: auto;"></div>
-      <br>
-      <br>
-      <div class="information">
-        <h5 class="txt-center">最も適応度の高い三角形の情報</h5>
-        <table border="1" class="table center">
-          <tr>
-            <td>点Aの座標</td>
-            <td id="vertex_A"></td>
-          </tr>
-          <tr>
-            <td>点Bの座標</td>
-            <td id="vertex_B"></td>
-          </tr>
-          <tr>
-            <td>点Cの座標</td>
-            <td id="vertex_C"></td>
-          </tr>
-          <tr>
-            <td>辺aの長さ</td>
-            <td id="side_a"></td>
-          </tr>
-          <tr>
-            <td>辺bの長さ</td>
-            <td id="side_b"></td>
-          </tr>
-          <tr>
-            <td>辺cの長さ</td>
-            <td id="side_c"></td>
-          </tr>
-          <tr>
-            <td>3辺の和</td>
-            <td id="sum_sides"></td>
-          </tr>
-          <tr>
-            <td>面積</td>
-            <td id="area"></td>
-          </tr>
-          </tbody>
-        </table>
+    <div class="container">
+      <div class="canvas_wrapper">
+        <h1>Canvas(1000px × 1000px)</h1>
+        <canvas id="canvas1" class="canvas"></canvas>
+      </div>
+      <div class="output">
+        <h1>出力結果</h1>
+        <h5 class="txt-center">各世代の適応度最大値</h5>
+        <div
+          id="chartContainer"
+          style="height: 500px; width:800px; margin: auto;"
+        ></div>
+        <br />
+        <br />
+        <div class="information">
+          <h5 class="txt-center">最も適応度の高い三角形の情報</h5>
+          <table border="1" class="table center">
+            <tr>
+              <td>点Aの座標</td>
+              <td id="vertex_A"></td>
+            </tr>
+            <tr>
+              <td>点Bの座標</td>
+              <td id="vertex_B"></td>
+            </tr>
+            <tr>
+              <td>点Cの座標</td>
+              <td id="vertex_C"></td>
+            </tr>
+            <tr>
+              <td>辺aの長さ</td>
+              <td id="side_a"></td>
+            </tr>
+            <tr>
+              <td>辺bの長さ</td>
+              <td id="side_b"></td>
+            </tr>
+            <tr>
+              <td>辺cの長さ</td>
+              <td id="side_c"></td>
+            </tr>
+            <tr>
+              <td>3辺の和</td>
+              <td id="sum_sides"></td>
+            </tr>
+            <tr>
+              <td>面積</td>
+              <td id="area"></td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
-  </div>
-</body>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
-<script src="./js/env-vriable.js"></script>
-<script src="./js/main.js" type="module"></script>
-<script src="./js/rangeslider.min.js"></script>
-
+  </body>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
+  <script src="./js/env-vriable.js"></script>
+  <script src="./js/main.js" type="module"></script>
+  <script src="./js/rangeslider.min.js"></script>
 </html>

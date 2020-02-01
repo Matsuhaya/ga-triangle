@@ -24,7 +24,7 @@ export default class Population {
   compareFitness(triangle) {
     if (triangle.fitness > this.best_triangle.fitness) {
       this.updateSecondTriangle(this.best_triangle);
-      this.updateBestTriangle(triangle)
+      this.updateBestTriangle(triangle);
     }
   }
 
@@ -38,7 +38,7 @@ export default class Population {
 
   runTournament(size) {
     let tournament_triangles = Array.from(this.triangles);
-    let targets = [] //コンソールでのトーナメント対象確認用
+    let targets = []; //コンソールでのトーナメント対象確認用
 
     for (let i = 0; i < size; i++) {
       let rand_indent = Math.floor(Math.random() * tournament_triangles.length);
@@ -69,7 +69,9 @@ export default class Population {
     let children = [];
     let chromosome_size = Math.ceil((this.size - this.elite_size) / 2);
     for (let i = 0; i < chromosome_size; i++) {
-      let cross_point = Math.floor(Math.random() * this.best_triangle.chromosome.length);
+      let cross_point = Math.floor(
+        Math.random() * this.best_triangle.chromosome.length
+      );
       let child1_chromosome =
         this.best_triangle.chromosome.substring(0, cross_point) +
         this.second_triangle.chromosome.substring(cross_point);
@@ -88,13 +90,13 @@ export default class Population {
   // console.logで動作確認済み
   runMutation(children) {
     if (Math.random() * 100 < 3) {
-      console.log('runMutation')
+      console.log('runMutation');
       // console.log('children:', children);
       for (let i = 0; i < this.size; i++) {
         for (let j = 0; j < children[i].length; j++) {
           let rand = Math.random() * 100;
           if (rand < 3) {
-            console.log('!!!!!!!!Mutation!!!!!!!!')
+            console.log('!!!!!!!!Mutation!!!!!!!!');
             // console.log('i,j:', i, j);
             if (children[i].substr(j, 1) == 0) {
               children[i] = this.constructor.strIns(children[i], j, '1');
@@ -145,5 +147,5 @@ export default class Population {
   static strDel(str, idx) {
     var res = str.slice(0, idx) + str.slice(idx + 1);
     return res;
-  };
-};
+  }
+}
